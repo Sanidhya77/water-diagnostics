@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "water-diagnostics"
+version = "0.1.0"
+description = "Read-only water diagnostic investigations for human review"
+readme = "README.md"
+requires-python = ">=3.11"
+dynamic = ["dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[tool.setuptools.packages.find]
+include = ["water_diagnostics*"]
+
+[tool.setuptools.package-data]
+water_diagnostics = ["web/*.html", "web/*.css", "web/*.js", "web/*.ttf", "web/OFL-Plex.txt"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

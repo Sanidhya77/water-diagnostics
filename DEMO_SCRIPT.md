@@ -1,0 +1,22 @@
+# Submission video: 2 minutes 45 seconds
+
+Record the actual application. Show the saved-result provenance and simulation
+labels. Avoid spending calls while rehearsing; the supplied walkthrough is free.
+
+| Time | Show | Say |
+| --- | --- | --- |
+| 0:00–0:20 | River replay and the instrument console | “When a turbidity reading changes, an operator needs to know what to check next. Water Diagnostics gathers evidence, compares explanations and records a traceable investigation.” |
+| 0:20–0:45 | Play the original signal; show the cleaning visit | “This is historical Poudre River data. The drop follows a recorded cleaning visit, but timing alone does not prove the cause. We keep the raw readings, source and replay clock visible.” |
+| 0:45–1:15 | Open an evidence check, report alternatives and citation | “Nemotron runs on Nebius Token Factory. It selects from five read-only tools. Python performs the checks and constrains conclusions, citations and report wording. This saved result remains uncertain and requests an independent measurement.” |
+| 1:15–1:40 | Switch through held sensor reading, process change and ambiguous evidence | “Three designed synthetic fixtures exercise different outcomes. These are saved hosted runs, not new inference or an accuracy benchmark. The local validation audits their evidence.” |
+| 1:40–2:10 | Recovery succeeds, then stays offline | “A separate local policy permits one simulated collector reconnect. The success needs new verified packets. The failure records an escalation. No real hardware operates and no alert is sent.” |
+| 2:10–2:30 | Download report; show reference guidance if a verified cached result exists | “The operator receives the evidence and next requested check. Optional Tavily guidance supplies current background, kept separate from historical incident evidence.” |
+| 2:30–2:45 | Finish on signal and decision | “The prototype combines a hosted NVIDIA model with deterministic checks and an auditable report. The next field step is a read-only collector pilot, with Raspberry Pi as a possible gateway.” |
+
+Before recording, confirm every shown report matches its visible provenance.
+If showing fresh hosted inference, record an actual successful explicit run and
+identify it as fresh; do not relabel a saved run. If Tavily is not demonstrated,
+describe it as optional and do not imply that a runtime lookup happened on camera.
+
+Submission positioning: **Best Apps and Agents** is the closest fit to the
+current prototype. Raspberry Pi hardware and physical AI remain future work.

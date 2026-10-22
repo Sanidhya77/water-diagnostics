@@ -1,0 +1,45 @@
+# Local credentials (the example remains trackable).
+.env
+.env.*
+!.env.example
+
+# Local Python environment and generated files.
+.venv/
+.vscode/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.pytest-tmp*/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.coverage
+htmlcov/
+
+# Local logs and generated incident reports.
+*.log
+logs/
+reports/*
+!reports/.gitkeep
+!reports/RIVER-udall-20240402T220000Z-offline.json
+!reports/RIVER-udall-20240402T220000Z-offline.md
+!reports/RIVER-udall-20240403T000000Z-nebius.json
+!reports/RIVER-udall-20240403T000000Z-nebius.md
+!reports/SIM-002-000-nebius-retry.json
+!reports/SIM-002-000-nebius-retry.md
+!reports/SIM-005-000-nebius-retry.json
+!reports/SIM-005-000-nebius-retry.md
+!reports/SIM-006-000-nebius.json
+!reports/SIM-006-000-nebius.md
+
+# Only the attributed judge replay is distributable. Retrospective QC stays local.
+data/*
+!data/river/
+data/river/*
+!data/river/udall-2024-04-01/
+data/river/udall-2024-04-01/*
+!data/river/udall-2024-04-01/observations.json
+!data/river/udall-2024-04-01/context.json
+!data/river/udall-2024-04-01/README.md

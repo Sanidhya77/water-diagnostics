@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#173b33"><title>Water Diagnostics · Investigation workbench</title>
+<link rel="stylesheet" href="/style.css?v=console-6"><script src="/app.js?v=console-6" defer></script>
+</head>
+<body>
+<svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+  <symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 9c3-5 6 5 9 0s6 5 9 0M3 15c3-5 6 5 9 0s6 5 9 0"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H5v18h14V8zM14 3v5h5M8 12h8M8 16h6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z"/><path d="m8 11 3 3 5-5"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="m9 5 10 7-10 7z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+</defs></svg>
+<a class="skip-link" href="#workspace">Skip to investigation</a>
+<header class="app-header">
+  <a class="brand" href="/" aria-label="Water Diagnostics home"><span class="brand-mark"><svg class="icon" aria-hidden="true"><use href="#i-wave"/></svg></span><span>Water <strong>Diagnostics</strong></span></a>
+  <nav class="app-nav" aria-label="Workspace navigation"><a class="active" href="#workspace" aria-current="location">Investigation</a><a href="#evidence-workbench">Evidence</a><a href="#report">Report</a><a href="#guidance">References</a></nav>
+</header>
+<main id="workspace">
+  <div class="page">
+    <section class="case-heading"><div><h1 id="site-name">Udall · Poudre River, Colorado</h1><p>Turbidity investigation <span id="source-badge" class="source-badge">Historical river data</span></p></div><div class="case-context"><span><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg> Human review required</span><small>NVIDIA Nemotron on Nebius</small></div></section>
+    <section class="replay-bar" aria-label="Replay selection">
+      <div class="source-tabs" role="group" aria-label="Data source"><button id="river-tab" class="selected" aria-pressed="true">River replay</button><button id="simulation-tab" aria-pressed="false">Simulated cases</button></div>
+      <div id="river-controls" class="replay-controls"><div class="preset-buttons"><button id="before-visit">Before visit</button><button id="after-visit" class="selected">After visit</button></div><label class="clock-label" for="replay-clock">Replay clock <span>UTC</span><input id="replay-clock" type="datetime-local" min="2024-04-01T00:00" max="2024-04-07T23:59" value="2024-04-03T00:00" required></label><button id="update-replay" class="button small">Update replay<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+      <div id="simulation-controls" class="replay-controls" hidden><label class="clock-label" for="scenario">Simulated scenario<select id="scenario"><option value="frozen">Held sensor reading</option><option value="normal">Brief excursion</option><option value="communication_loss">Missing telemetry</option><option value="maintenance">Maintenance disturbance</option><option value="process_change">Corroborating process change</option><option value="insufficient">Ambiguous evidence</option></select></label><a class="recovery-link" href="#recovery-demo">Try recovery simulation <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+    </section>
+    <div id="message" class="message" role="status" aria-live="polite" hidden></div>
+    <a class="console-jump" href="#investigation-decision">Investigation &amp; run controls <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <div class="console-layout">
+    <section class="chart-panel" id="signal" aria-label="Recorded signal">
+      <div class="signal-heading"><div><h2>Turbidity over time</h2><p id="chart-caption">Original readings available at the replay clock</p></div><div class="signal-readout"><div><span>Selected sample</span><div><strong id="sample-value">—</strong><span>NTU</span></div></div><div class="sample-clock"><time id="sample-time">Waiting for observations</time><span id="sample-position">Original recorded values</span></div></div><div class="chart-windows" id="chart-windows" role="group" aria-label="Chart time window"><button class="selected" data-hours="6" aria-pressed="true">6h</button><button data-hours="24" aria-pressed="false">24h</button><button data-hours="48" aria-pressed="false">48h</button></div></div>
+      <div class="chart-legend"><span class="legend"><i></i> Turbidity <span>NTU</span></span><span id="data-note">Original observations · 15-minute samples</span></div>
+      <div id="chart" class="chart" aria-label="Turbidity time series"></div>
+      <div class="chart-control-band"><div class="signal-transport"><button id="play-signal" class="signal-play" disabled aria-describedby="chart-playback-note"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg><span>Play signal</span></button><div class="sample-scrubber"><label for="signal-scrubber">Select recorded sample</label><input id="signal-scrubber" type="range" min="0" max="1" value="1" step="1" disabled></div><span id="playback-state" class="playback-state" role="status">Full window</span></div><div class="chart-footer"><span id="chart-range">Loading original observations…</span><span>All times UTC</span></div></div>
+      <p id="chart-playback-note" class="playback-note">Chart playback only. Investigation evidence stays at the selected replay clock.</p>
+      <dl class="observation-strip" aria-label="Current evidence overview"><div><dt>Latest at replay clock</dt><dd><strong id="latest-value">—</strong><span class="measurement-unit">NTU</span><span id="freshness-badge" class="pill">Loading</span></dd></div><div><dt>Device fault log</dt><dd id="device-value">Not supplied</dd></div><div><dt>Technician visits</dt><dd id="visit-value">—</dd></div><div><dt>Independent reference</dt><dd id="reference-value" class="missing">Not supplied</dd></div></dl>
+    </section>
+    <section class="investigation-brief" id="investigation-decision" aria-label="Investigation brief">
+      <div class="brief-outcome"><h2 id="brief-title">Ready to investigate</h2><p id="brief-provenance">Start with the available evidence.</p></div>
+      <div class="brief-next"><h3 id="brief-next-label">Get started</h3><p id="brief-next">Run the local checks or ask Nemotron to investigate this replay.</p><a class="brief-report-link" href="#report">Read investigation report <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <div class="run-controls"><div><button id="run-ai" class="button primary">Run with Nemotron <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button><small>Uses credits · $0.02 guard</small></div><div><button id="run-local" class="button secondary">Run local checks <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button><small>Free · no model call</small></div></div>
+    </section>
+    </div>
+    <section class="investigate-panel" id="evidence-workbench" aria-labelledby="evidence-heading">
+      <div class="trace-top"><div><h2 id="evidence-heading">Evidence workbench <span id="trace-count">0 / 5</span></h2><p>Five read-only checks. Open a completed check to inspect its evidence.</p></div><div id="run-status" class="run-status" aria-live="polite">Ready to investigate</div></div>
+      <ol id="check-list" class="check-list"></ol>
+      <details id="evidence-inspector" class="evidence-inspector" hidden><summary id="evidence-inspector-title">Selected check</summary><pre id="evidence-inspector-data"></pre></details>
+      <div class="workbench-footer"><div class="review-note"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><p id="confirmation-note">A time-matched independent measurement helps distinguish a sensor artifact from a change in the river.</p></div><details class="trace-details"><summary>View execution log</summary><pre id="execution-log">No new investigation started.</pre></details></div>
+    </section>
+    <section class="recovery-panel" id="recovery-demo" aria-labelledby="recovery-heading" hidden>
+      <div class="recovery-heading"><div><h2 id="recovery-heading">Recovery simulation</h2><p>A separate collector-connectivity case. Run one pre-authorized reconnect, verify new readings, then recover or escalate.</p></div><span class="source-badge simulated">Simulated data only</span></div>
+      <div class="recovery-controls"><label class="clock-label" for="recovery-case">Recovery scenario<select id="recovery-case"><option value="collector_recovers">Collector recovers</option><option value="collector_stays_offline">Collector stays offline</option></select></label><button id="run-recovery" class="button secondary">Run recovery simulation <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button><a id="recovery-download" class="download" href="#" hidden><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Download recovery report</a></div>
+      <p class="recovery-note">Local decision policy · No new model call or real hardware action. This simulation does not change the selected replay or its investigation.</p>
+      <p id="recovery-status" class="recovery-status" role="status" aria-live="polite">Choose a scenario to inspect its policy decision, action record and verification.</p>
+      <div id="recovery-result" hidden><h3 id="recovery-outcome"></h3><p id="recovery-provenance" class="recovery-note"></p><p id="recovery-scope" class="recovery-scope"></p><dl class="recovery-facts"><div><dt>Policy decision</dt><dd id="recovery-policy"></dd></div><div><dt>Reconnect attempts</dt><dd id="recovery-attempts"></dd></div><div><dt>New valid packets</dt><dd id="recovery-packets"></dd></div></dl><ol id="recovery-events" class="recovery-events"></ol><details class="recovery-readback"><summary>Inspect before and after readings · simulated clock</summary><pre id="recovery-data"></pre></details></div>
+    </section>
+    <div class="documents-layout">
+      <section class="report-panel" id="report"><div class="report-section-header"><h2>Investigation report</h2><a id="download-report" class="download" href="#" hidden><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Download report</a></div><h3 id="report-title">Choose your next check.</h3><div id="report-provenance" class="report-provenance">Run local checks for a free reference investigation.</div><div id="report-content"><p class="empty-state">The report connects each possible explanation to the checks actually performed.</p></div></section>
+      <section class="guidance-panel" id="guidance"><div class="panel-heading"><div><h2>Reference guidance</h2><p>Background for the operator’s next check.</p></div><span class="provider-label">Tavily</span></div><div class="guidance-intro"><p>Find monitoring and sensor-quality guidance from USGS, EPA and the sensor manufacturer.</p><button id="lookup-guidance" class="button secondary"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>Look up guidance</button></div><p id="guidance-cost" class="guidance-cost">On request only · 1 Tavily credit · cached for 24 hours</p><div id="guidance-results" aria-live="polite"></div><p class="guidance-boundary">Current reference material, not evidence from this historical replay. Sources do not change the diagnosis or operate equipment.</p></section>
+    </div>
+    <footer class="page-footer"><span>Evidence first. Operator decides.</span><span>No water-safety determination · No equipment actions</span></footer>
+  </div>
+</main>
+</body></html>

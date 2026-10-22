@@ -1,0 +1,89 @@
+{
+  "source": "REAL_RIVER_SENSOR_DATA",
+  "site": "udall",
+  "site_metadata": {
+    "site": "udall",
+    "latitude": "40.588073",
+    "longitude": "-105.069231",
+    "grab_sample_site": "lincoln",
+    "site_description": "Poudre at Lincoln St above Lincoln St Outflow",
+    "housing_description": "Upstream of USGS gauge, downstream of bridge, left bank. 20ft high flow housing and 10 ft deployable low flow housing.",
+    "flow_source": "USGS site 06752260",
+    "data_start_date": "2023-07-13T00:00:00Z",
+    "data_end_date": "2025-11-17T00:00:00Z",
+    "min_year": "2023",
+    "max_year": "2025",
+    "year_range": "2023-2025"
+  },
+  "sensor_methods": {
+    "Chl-a Fluorescence": {
+      "parameter": "Chl-a Fluorescence",
+      "units": "RFU",
+      "sensor": "Aqua TROLL Chlorophyll a Sensor",
+      "calibration_method": "Yearly two-point calibration of sensor using DI (0 RFU) and rhodamine dye (500 μg/L, 2.9 RFU) ",
+      "Notes": ""
+    },
+    "DO": {
+      "parameter": "RDO",
+      "units": "mg/L",
+      "sensor": "Aqua TROLL RDO Sensor",
+      "calibration_method": "100 % saturation in-air calibration using wetted sponge",
+      "Notes": "Stream morphology (ie. pool vs riffle) and shading patterns may affect readings"
+    },
+    "Depth": {
+      "parameter": "Depth",
+      "units": "m",
+      "sensor": "Aqua TROLL and/or Vulink",
+      "calibration_method": "If AquaTROLL only, depth is calibrated using onboard barometric pressure sensor to in air conditions. If AquaTroll and Vulink are deployed together, VuLink Barometric Pressure compensation is applied",
+      "Notes": "Sensor Housing shifts or bank changes are not accounted for in this dataset and depth is relative to current site conditions"
+    },
+    "FDOM Fluorescence": {
+      "parameter": "FDOM Fluorescence",
+      "units": "RFU",
+      "sensor": "Aqua TROLL FDOM Sensor",
+      "calibration_method": "One-point calibration using solid state calibration block (8.25 RFU)",
+      "Notes": ""
+    },
+    "Specific Conductivity": {
+      "parameter": "Specific Conductivity",
+      "units": "μS/cm at 25  degrees C",
+      "sensor": "Aqua TROLL Temperature-Conductivity Sensor",
+      "calibration_method": "Pre-2024: One point with 1413 μS/cm 2024 onwards: Two-point with either DI (0.1 μS/cm) and 147 μS/cmstandard or 147 μS/cm and 1413  μS/cm depending on site range. ",
+      "Notes": ""
+    },
+    "Temperature": {
+      "parameter": "Temperature",
+      "units": "degrees C",
+      "sensor": "Aqua TROLL Temperature-Conductivity Sensor",
+      "calibration_method": "Annual Factory Calibration",
+      "Notes": "Stream morphology (ie. pool vs riffle) and shading patterns may affect readings"
+    },
+    "Turbidity": {
+      "parameter": "Turbidity",
+      "units": "NTU",
+      "sensor": "Aqua TROLL Turbidity Sensor",
+      "calibration_method": "Two-point calibration using 10 NTU and 100 NTU standards",
+      "Notes": ""
+    },
+    "pH": {
+      "parameter": "pH",
+      "units": "pH",
+      "sensor": "Aqua TROLL pH / ORP Sensor",
+      "calibration_method": "Three-point with 4,7,10 buffer standards",
+      "Notes": ""
+    }
+  },
+  "calibration_note": "Methods describe standard procedures, not proof a calibration occurred at a particular time.",
+  "visit_note_availability_assumption": "Historical replay assumption: visit notes become available at the next UTC midnight. The source provides visit times, not the actual times when notes were entered.",
+  "visit_records": [
+    {
+      "visit_time_utc": "2024-04-02T22:15:00Z",
+      "assumed_available_at_utc": "2024-04-03T00:00:00+00:00",
+      "sensors_cleaned": "TRUE",
+      "calibrations_recorded": "None",
+      "reported_sensor_issue": "Drift on turb prior to visit",
+      "visit_comments": "Cleaned sonde as there was a big pit of grime on it but nothing too crazy. Turb was at about 10 NTU prior to visit, about 1 ntu after visit. Downloaded log and test uploaded. Battery slightly low at 38%. USGS gauge reading 60 CFS, we measured way high on the first go (110 cfs ) and much bettter on second go (60 cfs, with 60 at the guage)",
+      "source": "historical_technician_record"
+    }
+  ]
+}
