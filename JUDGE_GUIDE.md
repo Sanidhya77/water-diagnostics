@@ -10,6 +10,9 @@ checks and enforces evidence citations, report constraints and spending limits.
 Requires Python 3.11 or newer. Extract the test build, then open PowerShell in
 the extracted project folder (GitHub ZIPs may append the branch or commit ID):
 
+On Windows, use a short extraction location such as `water-demo` in your home
+folder; deeply nested OneDrive paths can exceed Windows path-length limits.
+
 ```powershell
 py -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt

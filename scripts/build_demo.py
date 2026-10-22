@@ -25,6 +25,12 @@ FIXED_FILES = (
     "data/river/udall-2024-04-01/observations.json",
     "data/river/udall-2024-04-01/context.json",
     "data/river/udall-2024-04-01/README.md",
+    "scripts/evaluate_river_holdout.py",
+    "data/river/udall-2024-04-08/observations.json",
+    "data/river/udall-2024-04-08/context.json",
+    "data/river/udall-2024-04-08/README.md",
+    "evaluations/river-holdout-2024-04-08/selection.json",
+    "evaluations/river-holdout-2024-04-08/README.md",
 )
 WEB_FILES = ("index.html", "style.css", "app.js", "plex-regular.ttf",
              "plex-semibold.ttf", "OFL-Plex.txt")
@@ -36,6 +42,12 @@ def release_files(root=ROOT):
     files.update(root / "water_diagnostics" / "web" / name for name in WEB_FILES)
     files.update(root / "reports" / (name + suffix) for name in REPORTS
                  for suffix in (".json", ".md"))
+    for run in ("local-checks", "reviewed-checks"):
+        folder = root / "evaluations/river-holdout-2024-04-08" / run
+        files.update(folder / (stem + suffix)
+            for stem in ("comparison", "RIVER-udall-20240410T000000Z-offline",
+                         "RIVER-udall-20240412T000000Z-offline", "RIVER-udall-20240415T000000Z-offline")
+            for suffix in (".json", ".md"))
     for folder in ("water_diagnostics", "tests"):
         files.update((root / folder).rglob("*.py"))
     for path in files:

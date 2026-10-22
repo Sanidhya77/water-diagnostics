@@ -22,6 +22,17 @@ as trained on the river dataset.
 
 ## Next useful data step
 
+Completed locally on October 22: Udall, April 8–14, with three replay clocks
+fixed before evaluation. The existing archives were sufficient. The subset
+contains 162 missing turbidity entries and two recorded visits. All three
+local workflow-integrity checks passed; no Nemotron inference or training was
+performed. All reports remain inconclusive. This is additional workflow
+evidence, not a model-accuracy result. The selection, both local runs and full
+reports are in [the evaluation record](evaluations/river-holdout-2024-04-08/README.md).
+
+The steps below describe the selection procedure used and the later hosted
+review that remains pending:
+
 Select one additional site or nonoverlapping week from the already downloaded,
 pinned CSU ROSS / Poudre Water Quality Network archives. No new dataset purchase
 is needed. Keep the week separate from workflow development. Choose it for

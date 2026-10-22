@@ -10,7 +10,7 @@ is our project-fit judgment, not an eligibility guarantee.
 
 - Hosted NVIDIA Nemotron through Nebius Token Factory, with five approved checks.
 - Separate simulated incidents and historical river replay.
-- Three saved synthetic workflow cases pass; the current suite has 152 passing
+- Three saved synthetic workflow cases pass; the current suite has 155 passing
   local tests, including recovery gates and verification. The samples are
   development checks, not field accuracy.
 - Saved reports, evidence citations and operator requests in the local dashboard.
@@ -36,8 +36,12 @@ is our project-fit judgment, not an eligibility guarantee.
   was not a fresh dependency installation. Verified both river presets, three
   saved reports, three fresh local checks, 3/3 saved evidence audits and both
   recovery outcomes with outbound requests blocked. Archive hashes matched.
-- [x] Run the 152-test suite and desktop/tablet/phone browser checks after the
+- [x] Run the original 152-test suite and desktop/tablet/phone browser checks after the
   console refinement. No new paid model or Tavily requests were made.
+- [x] Prepare and evaluate a separate April 8–14 river week from existing ZIPs.
+  Three fixed local replays passed workflow-integrity checks; the suite now has
+  155 passing tests. Missing records and source uncertainty are retained. This
+  is additional local evidence, not model accuracy or training.
 - [x] Explain cached replay, free local checks and live hosted inference
   separately in `JUDGE_GUIDE.md`. Saved and local functionality needs no key.
 - [ ] Confirm the judge-access arrangement for fresh hosted inference if it is

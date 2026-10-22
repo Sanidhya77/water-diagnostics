@@ -14,13 +14,21 @@ License: [Creative Commons Attribution 4.0](https://creativecommons.org/licenses
 The resource's CC BY 4.0 statement was checked October 22, 2026. This project
 retains that pinned version even though HydroShare lists a newer version.
 
-The distributed subset is Udall, April 1–7, 2024 UTC: 672 turbidity readings,
+The primary demo subset is Udall, April 1–7, 2024 UTC: 672 turbidity readings,
 5,376 observations across eight parameters, sensor/site metadata and one visit
 record. Original CSV records were selected and converted to JSON; measurements
 were not synthesized or replaced with cleaned values. Field names were adapted.
 Visit-note availability at the following UTC midnight is our explicit replay
 assumption, since actual note-entry times were not supplied. Retrospective QC
 and corrected answers are excluded from the judge build and from runtime checks.
+
+The additional evaluation subset is Udall, April 8–14, 2024 UTC: 5,376 original
+records across eight parameters, 672 turbidity time slots (510 numeric and 162
+null), and two technician visits. It was selected as the next nonoverlapping
+week before inspecting its outcomes. The same selection, JSON conversion and
+note-availability assumption apply. Missing values remain null; no gap was
+interpolated and no corrected values replaced original measurements. Archive
+basenames and SHA-256 hashes are retained without local directory paths.
 
 The resource describes river water. It does not establish treatment-plant
 accuracy or water safety. Its creators do not endorse this application.

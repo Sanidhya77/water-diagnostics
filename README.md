@@ -105,7 +105,7 @@ no hardware, GPIO, shell, process-restart or device-network interface.
 .\.venv\Scripts\python.exe -m water_diagnostics validate-demo --mode saved
 ```
 
-The October 22 local suite passed 152 tests. The bundled saved comparison audits
+The October 22 local suite passed 155 tests. The bundled saved comparison audits
 three designed synthetic fixtures at seed 0. It matched all three expected
 outcomes without new inference. These checks describe the guarded
 model-plus-Python workflow; they are not an independent benchmark. The saved
@@ -115,6 +115,13 @@ identical protocol. Saved inference has no new measured latency.
 The UI was checked at 1365, 1024, 768 and 390 px, including playback, reduced
 motion, both recovery outcomes and downloads. Clean extracted source was checked
 without credentials or the uploaded ZIPs, reusing installed dependency packages.
+
+An [additional real-data week](evaluations/river-holdout-2024-04-08/README.md),
+April 8–14 at Udall, was prepared from the existing archives without another
+download. It contains 162 missing turbidity entries. Three fixed local replays
+passed workflow-integrity checks, preserving missing values and uncertainty.
+This is not a model-accuracy result or a fresh Nemotron evaluation. Reproduce it
+with `python scripts/evaluate_river_holdout.py`; no API key is required.
 
 ## Package and submission
 
@@ -134,9 +141,9 @@ script creates a local archive with a manifest. GitHub also provides the
 downloadable source test build linked above. No hosted API access, video or
 Devpost entry is created by the build.
 
-See [EVALUATION_PLAN.md](EVALUATION_PLAN.md) for the next data step: a held-out
-week or site, free local checks first and a small fixed hosted evaluation later.
-More data is for evaluating the workflow; no training job is part of this build.
+See [EVALUATION_PLAN.md](EVALUATION_PLAN.md) for the completed additional-week
+checks and the later hosted-review plan. More data is for evaluating the workflow;
+no training job is part of this build.
 
 ## Boundaries and licenses
 
