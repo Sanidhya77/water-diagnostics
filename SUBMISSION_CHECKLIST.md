@@ -67,4 +67,5 @@ workflow. Its prerequisite is a functional runtime Tavily call; a static list of
 links alone does not establish that integration.
 
 The repository is public. Video and Devpost publication are still outstanding.
-Test builds are listed at https://github.com/Sanidhya77/water-diagnostics/releases.
+Public source test build:
+https://github.com/Sanidhya77/water-diagnostics/archive/refs/heads/main.zip

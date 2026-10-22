@@ -8,7 +8,7 @@ checks and enforces evidence citations, report constraints and spending limits.
 ## Start on Windows
 
 Requires Python 3.11 or newer. Extract the test build, then open PowerShell in
-the extracted `water-diagnostics` folder:
+the extracted project folder (GitHub ZIPs may append the branch or commit ID):
 
 ```powershell
 py -m venv .venv

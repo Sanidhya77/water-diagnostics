@@ -12,7 +12,7 @@ one simulated collector reconnect followed by verification or escalation.
 walkthrough. No model download, GPU, VM or original research ZIP is required.
 
 [Public repository](https://github.com/Sanidhya77/water-diagnostics) ·
-[Downloadable test builds](https://github.com/Sanidhya77/water-diagnostics/releases)
+[Download source test build](https://github.com/Sanidhya77/water-diagnostics/archive/refs/heads/main.zip)
 
 ## Run locally
 
@@ -130,8 +130,9 @@ Existing output archives are never overwritten.
 
 See [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md) for remaining publication
 steps and [DEMO_SCRIPT.md](DEMO_SCRIPT.md) for a 2:45 video outline. The build
-script creates a local archive; publication to GitHub Releases is a separate
-step. No hosted API access, video or Devpost entry is created by the build.
+script creates a local archive with a manifest. GitHub also provides the
+downloadable source test build linked above. No hosted API access, video or
+Devpost entry is created by the build.
 
 See [EVALUATION_PLAN.md](EVALUATION_PLAN.md) for the next data step: a held-out
 week or site, free local checks first and a small fixed hosted evaluation later.
