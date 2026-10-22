@@ -11,6 +11,9 @@ one simulated collector reconnect followed by verification or escalation.
 **Start with [JUDGE_GUIDE.md](JUDGE_GUIDE.md)** for setup and a free two-minute
 walkthrough. No model download, GPU, VM or original research ZIP is required.
 
+[Public repository](https://github.com/Sanidhya77/water-diagnostics) ·
+[Downloadable test builds](https://github.com/Sanidhya77/water-diagnostics/releases)
+
 ## Run locally
 
 Python 3.11 or newer, from this project folder in PowerShell:
@@ -126,8 +129,13 @@ usage ledgers, browser profiles, the virtual environment and retrospective QC.
 Existing output archives are never overwritten.
 
 See [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md) for remaining publication
-steps and [DEMO_SCRIPT.md](DEMO_SCRIPT.md) for a 2:45 video outline. No public
-repository, video, hosted API access or Devpost entry is created by the build.
+steps and [DEMO_SCRIPT.md](DEMO_SCRIPT.md) for a 2:45 video outline. The build
+script creates a local archive; publication to GitHub Releases is a separate
+step. No hosted API access, video or Devpost entry is created by the build.
+
+See [EVALUATION_PLAN.md](EVALUATION_PLAN.md) for the next data step: a held-out
+week or site, free local checks first and a small fixed hosted evaluation later.
+More data is for evaluating the workflow; no training job is part of this build.
 
 ## Boundaries and licenses
 

@@ -47,8 +47,9 @@ is our project-fit judgment, not an eligibility guarantee.
 ## Repository and submission materials
 
 - [x] Add an MIT source license; data and fonts retain their separate licenses.
-- [ ] Prepare a public GitHub/GitLab/Bitbucket repository with README, source,
+- [x] Prepare a public GitHub/GitLab/Bitbucket repository with README, source,
   assets, setup instructions and a clear Nebius/NVIDIA architecture explanation.
+  Published: https://github.com/Sanidhya77/water-diagnostics
 - [x] Exclude credentials, local usage ledgers, browser profiles, virtual
   environments and private files from the release.
 - [ ] Record a public YouTube video under three minutes, showing the actual
@@ -65,4 +66,5 @@ Optional: pursue the Tavily bonus if the lookup is a useful part of the recorded
 workflow. Its prerequisite is a functional runtime Tavily call; a static list of
 links alone does not establish that integration.
 
-No repository, video or Devpost entry has been published by this preparation step.
+The repository is public. Video and Devpost publication are still outstanding.
+Test builds are listed at https://github.com/Sanidhya77/water-diagnostics/releases.
