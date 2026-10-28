@@ -51,7 +51,7 @@ def release_files(root=ROOT):
     files.update(root / "demo_reports" / (stem + suffix) for stem in demo_stems for suffix in (".json", ".md"))
     qualification = root / "qualification/2026-10-28"
     files.update(qualification / name for name in (
-        "README.md", "fresh-results.json", "browser-api-check.json", "fresh-install.json", "operator-case.json",
+        "README.md", "fresh-results.json", "browser-api-check.json", "fresh-install.json", "operator-case.json", "public-demo-check.json",
         "history/phase-1.json", "history/phase-2.json", "history/phase-3.json",
         "history/incomplete-RIVER-udall-20240402T220000Z-nebius.json",
         "history/incomplete-RIVER-udall-20240402T220000Z-nebius.md",

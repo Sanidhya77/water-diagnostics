@@ -1,0 +1,16 @@
+{
+  "url": "https://water-diagnostics-demo.onrender.com",
+  "checked_date": "2026-10-28",
+  "scope": "Public replay runtime; no fresh model inference, private telemetry or hardware.",
+  "paid_routes_rejected": true,
+  "gap_saved_report_available": true,
+  "free_investigation_and_download": true,
+  "health": {
+    "status": "ready",
+    "public_demo": true
+  },
+  "recovery_outcomes": [
+    "telemetry_restored",
+    "escalated"
+  ]
+}

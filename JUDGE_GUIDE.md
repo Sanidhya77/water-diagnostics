@@ -5,6 +5,11 @@ read-only checks, compares explanations and requests the next operator check.
 NVIDIA Nemotron runs through the Nebius Token Factory API. Python executes the
 checks and enforces evidence citations, report constraints and spending limits.
 
+**Open the [public replay demo](https://water-diagnostics-demo.onrender.com)**
+for saved results, fresh free local checks and recovery simulations. No account
+is required. The Free service may need about a minute to wake after inactivity.
+Fresh paid inference is available in the local build described below.
+
 ## Start on Windows
 
 Requires Python 3.11 or newer. Extract the test build, then open PowerShell in

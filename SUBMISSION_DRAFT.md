@@ -21,12 +21,15 @@ no physical hardware deployment is claimed.
 ## Links for the form
 
 - Public repository: https://github.com/Sanidhya77/water-diagnostics
-- Verified source test build: https://github.com/Sanidhya77/water-diagnostics/archive/576c97fa0457c6c1d564935ca1f13bd3ff6928f0.zip
+- Public replay demo: https://water-diagnostics-demo.onrender.com
+- Source test build: https://github.com/Sanidhya77/water-diagnostics/archive/refs/heads/main.zip
 - Testing instructions: https://github.com/Sanidhya77/water-diagnostics/blob/main/JUDGE_GUIDE.md
 - Additional-week evidence: https://github.com/Sanidhya77/water-diagnostics/blob/main/evaluations/river-holdout-2024-04-08/README.md
 - Public YouTube video: PENDING — record and upload the actual application.
 
-The test build runs locally; it is not a publicly hosted web application.
+The public demo offers saved Nemotron results, free local checks and recovery
+simulations without login. Paid provider calls are blocked there. The source
+test build runs locally and supports optional fresh inference with a local key.
 Dependency installation needs internet access. The bundled saved/local walkthrough
 requires no API key or paid service. The build was checked from extracted source
 with credentials and original research ZIPs absent, reusing installed dependencies.

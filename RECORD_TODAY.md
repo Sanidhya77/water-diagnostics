@@ -59,13 +59,14 @@ Use the read-aloud text in `DEMO_SCRIPT.md` as a guide, not a claim of field pro
 Public repository: https://github.com/Sanidhya77/water-diagnostics
 Source test build: https://github.com/Sanidhya77/water-diagnostics/archive/refs/heads/main.zip
 
-This is a local test build with a hosted-model option, not a deployed public web
-service. Python 3.12 is the tested release target; fresh inference needs internet
-and a valid server-side Nebius key. No Raspberry Pi or treatment equipment is used.
-Public hosted access funded by the entrant is not configured; do not describe it
-as available or publish a shared key. `HOSTING.md` now provides a Free Render
-configuration for saved results, free checks and recovery simulations, with
-paid APIs blocked. It has to be deployed and checked before sharing a live URL.
+Public replay demo: https://water-diagnostics-demo.onrender.com
+
+The public service offers saved results, free local checks and recovery
+simulations, with paid APIs blocked. It was checked live on October 28. For fresh
+Nemotron inference, record the local app with your existing key. Python 3.12 is
+the tested release target. No Raspberry Pi or treatment equipment is used.
+Entrant-funded public fresh inference is not configured; do not publish a shared
+key. See `HOSTING.md` for public-demo scope and Free-service sleep limits.
 Confirm free judge access to the demonstrated
 functionality using the final testing arrangement.
 

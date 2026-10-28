@@ -12,6 +12,22 @@ shows its scope beside the replay controls and disables paid buttons with an
 explanation; enforcement also lives in the backend. The console identity and
 existing workflow remain. Gap-related reports lead with the logging/power review.
 
+The public-console refinement uses a forest-green application header, a flat
+replay toolbar and one joined signal/decision instrument. The chart leads;
+the 340 px decision area holds the result, requested action and run controls.
+Public visitors see the free local run as the primary action. Paid controls stay
+disabled with an explanation and a link to the local build. No login is needed
+for public recorded data. Private site data, stored histories and operator roles
+would require a separate authenticated backend design.
+
+Explicit null entries appear as hatched chart intervals with counts derived
+from the displayed source records. No measurements are filled or inferred.
+The window's numeric/missing counts are separate from the investigation clock
+and evidence. Simulated views show their simulated value count without claiming
+that an absence of explicit nulls means complete telemetry. Small screens use
+shorter recorded-visit labels. Static USGS/EPA links are labelled Public sources;
+they are not represented as a Tavily retrieval or incident evidence.
+
 ## Visual direction
 
 Keep the forest-green identity. Give the recorded signal a focused instrument
@@ -21,7 +37,7 @@ checks; the chart is the single strong visual focal point.
 
 Use IBM Plex Sans, locally hosted, for the complete UI. Use Consolas only for raw
 evidence and execution logs. Fixed rem sizes: 12 px metadata, 13–14 px content
-and controls, 16 px panel headings, 20 px selected chart measurement, 32 px page
+and controls, 16 px panel headings, 20 px selected chart measurement, 36 px page
 heading. Tabular numerals for measurements, dates, counts and costs. No external
 font request, licensing service or animation dependency is needed. Font license:
 `water_diagnostics/web/OFL-Plex.txt`.
@@ -138,3 +154,9 @@ Screenshots use `reports/console-*.png`. Browser checks cover 1365, 1024, 768 an
 390 px, recorded playback, reduced motion, recovery and downloads. Earlier
 workbench screenshots preserve the preceding composition and predate removal
 of the personal development meter.
+
+The public-console pass was checked at 1365, 1024, 768 and 390 px, including
+the two river weeks, gap annotation/counts, saved and free results, playback,
+reduced motion, downloads and both recovery outcomes. No browser errors, page
+overflow or paid ledger changes were found. The manual mechanical scan returned
+no findings. Screenshots use `reports/release-console-*.png`.

@@ -12,6 +12,7 @@ one simulated collector reconnect followed by verification or escalation.
 walkthrough. No model download, GPU, VM or original research ZIP is required.
 
 [Public repository](https://github.com/Sanidhya77/water-diagnostics) ·
+[Public replay demo](https://water-diagnostics-demo.onrender.com) ·
 [Download source test build](https://github.com/Sanidhya77/water-diagnostics/archive/refs/heads/main.zip)
 
 ## Run locally
@@ -75,10 +76,11 @@ not. These commands do not require activation or Conda.
 Opening the page, changing cases, playback, saved results, local checks and
 recovery simulations make no paid API calls.
 
-[Free hosting instructions](HOSTING.md) describe the prepared Render demo mode.
-It blocks paid providers on the server and keeps generated reports in bounded
-memory. Account connection and successful deployment are still required; no
-public URL is claimed here. The local build retains optional fresh inference.
+[The public demo](https://water-diagnostics-demo.onrender.com) runs on Render
+without login. It offers recorded replays, saved Nemotron reports, free local
+checks and recovery simulations. It blocks paid providers on the server and
+keeps generated reports in bounded memory. The local build retains optional fresh
+inference. See [hosting details](HOSTING.md), including free-service sleep limits.
 See [usefulness and operator review](USEFULNESS_AND_PILOT.md) for the documented
 operator need, implemented backend behavior and a short review protocol.
 

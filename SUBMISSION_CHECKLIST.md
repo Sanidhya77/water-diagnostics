@@ -58,7 +58,11 @@ is our project-fit judgment, not an eligibility guarantee.
 ## Repository and submission materials
 
 - [x] Prepare local Devpost copy and recording steps in `SUBMISSION_DRAFT.md`.
-  Video URL, free hosted judge access and final submission remain pending.
+  Video URL, the fresh-inference judge-access arrangement and final submission
+  remain pending.
+- [x] Deploy and check the public replay demo at
+  https://water-diagnostics-demo.onrender.com. No login or paid calls are needed
+  for recorded replay, local checks, downloads and recovery simulations.
 
 - [x] Add an MIT source license; data and fonts retain their separate licenses.
 - [x] Prepare a public GitHub/GitLab/Bitbucket repository with README, source,

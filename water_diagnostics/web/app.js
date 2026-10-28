@@ -143,6 +143,11 @@ function drawChart(data) {
   const points = data.points.map((p) => ({time: new Date(p.time).getTime(), value: p.value}))
     .filter((p) => state.source !== "river" || p.time >= observed - state.chartHours * 3600000);
   const valid = points.filter((p) => typeof p.value === "number" && Number.isFinite(p.value));
+  const missingCount = points.filter((p) => p.value === null).length;
+  $("signal-availability").textContent = state.source === "river"
+    ? `${valid.length} numeric ${valid.length === 1 ? "value" : "values"} · ${missingCount} missing ${missingCount === 1 ? "entry" : "entries"} in this chart window`
+    : `${valid.length} simulated ${valid.length === 1 ? "value" : "values"} in this chart window`;
+  $("signal-availability").classList.toggle("has-gaps", missingCount > 0);
   if (!valid.length) {
     root.appendChild(node("p", "No usable observations in this window. Choose a wider window or inspect the freshness check.", "empty-state"));
     $("chart-range").textContent="No usable observations"; $("sample-value").textContent="—";
@@ -158,6 +163,26 @@ function drawChart(data) {
   const defs = svgElement("defs", {}, svg);
   const clipPath = svgElement("clipPath", {id:"signal-window",clipPathUnits:"userSpaceOnUse"}, defs);
   const clip = svgElement("rect", {x:left-3,y:0,width:right-left+6,height}, clipPath);
+  const pattern = svgElement("pattern", {id:"missing-values",width:8,height:8,patternUnits:"userSpaceOnUse"}, defs);
+  svgElement("path", {d:"M -2 2 L 2 -2 M 0 8 L 8 0 M 6 10 L 10 6",class:"gap-hatch"}, pattern);
+  let gap = [];
+  const paintGap = () => {
+    if (!gap.length) return;
+    const halfInterval = data.summary.interval_seconds * 500;
+    const start = Math.max(left, x(gap[0].time - halfInterval));
+    const end = Math.min(right, x(gap.at(-1).time + halfInterval));
+    const group = svgElement("g", {class:"chart-gap","aria-label":`${gap.length} missing original entries`}, svg);
+    svgElement("rect", {x:start,y:top,width:Math.max(0,end-start),height:bottom-top,fill:"url(#missing-values)"}, group);
+    if (end - start > 100) {
+      svgElement("text", {x:(start+end)/2,y:top+(bottom-top)/2-10,"text-anchor":"middle",class:"gap-label"}, group, `${gap.length} missing ${width < 500 ? "entries" : "original entries"}`);
+      if (width >= 500) svgElement("text", {x:(start+end)/2,y:top+(bottom-top)/2+12,"text-anchor":"middle",class:"gap-caption"}, group, "No values filled or inferred");
+    }
+    gap = [];
+  };
+  for (const point of points) {
+    if (point.value === null) gap.push(point); else paintGap();
+  }
+  paintGap();
   for (let i = 0; i <= 4; i++) {
     const value = maximum * i / 4;
     svgElement("line", {x1: left, y1: y(value), x2: right, y2: y(value), class: "chart-grid"}, svg);
@@ -197,7 +222,8 @@ function drawChart(data) {
     if (time < first || time > last) continue;
     svgElement("line", {x1: x(time), x2: x(time), y1: top, y2: bottom, class: "chart-event"}, svg);
     const nearStart = x(time) < (left + right) / 2;
-    svgElement("text", {x: x(time) + (nearStart ? 7 : -7), y: top - 8, "text-anchor": nearStart ? "start" : "end", class: "chart-event-label"}, svg, event.label);
+    const eventLabel = svgElement("text", {x: x(time) + (nearStart ? 7 : -7), y: top - 8, "text-anchor": nearStart ? "start" : "end", class: "chart-event-label"}, svg, width < 500 ? "Recorded visit" : event.label);
+    svgElement("title", {}, eventLabel, event.label);
   }
   const hover = svgElement("circle", {r: 4, fill: "#d7e6d9", stroke: "#173b33", "stroke-width": 2, visibility: "hidden"}, svg);
   const crosshair = svgElement("line", {y1:top,y2:bottom,class:"chart-crosshair",visibility:"hidden"}, svg);
@@ -292,7 +318,7 @@ function renderReport(report, saved = false) {
   state.displayMode = ai ? "nebius" : "offline";
   $("download-report").href = "/api/download?" + query(state.displayMode);
   $("report-provenance").textContent = saved
-    ? (ai ? "Saved Nemotron investigation · Loaded locally; no new API request." : "Saved local reference · No model called.")
+    ? (ai ? "Saved Nemotron investigation · No new API request." : "Saved local reference · No model called.")
     : (ai ? "NVIDIA Nemotron · Investigated through the Nebius API." : "Local reference investigation · No model called.");
   const titles = {sensor_problem: "Evidence suggests a sensor problem.", normal_behaviour: "Review the earlier excursion.", process_change: "Corroborating process evidence.", communication_loss: "A gap in received telemetry.", maintenance_disturbance: "Review the maintenance timing."};
   const dataGap = report.hypotheses.some(item => item.name === "data_availability_issue");
@@ -350,8 +376,13 @@ async function loadReplay() {
     if (generation !== state.generation) return;
     state.replay = data;
     state.publicDemo = Boolean(data.capabilities?.public_demo);
+    document.body.classList.toggle("public-demo", state.publicDemo);
     $("deployment-note").hidden = !state.publicDemo;
     $("ai-run-note").textContent = state.publicDemo ? "Fresh API calls: use the local build" : "Uses credits · $0.02 guard";
+    $("run-local").classList.toggle("primary", state.publicDemo);
+    $("run-local").classList.toggle("secondary", !state.publicDemo);
+    $("run-ai").classList.toggle("primary", !state.publicDemo);
+    $("run-ai").classList.toggle("secondary", state.publicDemo);
     const summary = data.summary;
     $("source-badge").textContent = summary.source_label;
     $("source-badge").className = "source-badge" + (state.source === "simulated" ? " simulated" : "");
@@ -492,8 +523,9 @@ for (const button of $("chart-windows").querySelectorAll("button")) button.addEv
 });
 function renderGuidance(result) {
   const target = $("guidance-results"); target.replaceChildren();
+  $("reference-provider").textContent = result ? "Tavily sources" : "Public sources";
   $("lookup-guidance").hidden = Boolean(result);
-  if (!result) { $("guidance-cost").textContent = "On request only · 1 Tavily credit · cached for 24 hours"; return; }
+  if (!result) { $("guidance-cost").textContent = state.publicDemo ? "Fresh reference lookup is available in the local build." : "On request only · 1 Tavily credit · cached for 24 hours"; return; }
   const time = new Date(result.retrieved_at).toLocaleString("en-GB", {timeZone:"UTC"});
   $("guidance-cost").textContent = (result.cached ? "Cached Tavily sources · no new credit used" : "Retrieved through Tavily · " + (result.reported_credits ?? "1 reserved") + " search credit") + " · " + time + " UTC";
   if (!result.documents.length) target.appendChild(node("p", "No allowlisted source was returned. The diagnostic conclusion is unchanged.", "empty-state"));

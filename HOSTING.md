@@ -1,9 +1,14 @@
 # Free public demonstration on Render
 
+The [public replay demo](https://water-diagnostics-demo.onrender.com) is deployed
+on Render. Its health, free investigation/download, gap report, both recovery
+outcomes and paid-route rejection were checked on October 28, 2026. Evidence is
+in `qualification/2026-10-28/public-demo-check.json`.
+
 The repository includes a `render.yaml` Blueprint for one **Free Python web
-service**. Account connection and successful deployment must be checked before
-claiming a public URL. No database, persistent disk, GPU or model download is
-required. This configuration is a review demo, not a production telemetry service.
+service**. No database, persistent disk, GPU or model download is required.
+This is a review demo, not a production telemetry service. The following steps
+also describe how to reproduce the deployment in another Render account.
 
 ## Publish
 

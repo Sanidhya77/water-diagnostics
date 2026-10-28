@@ -105,3 +105,22 @@ intentional segmented control, not nested content cards.
 disabled server-side, generated results are bounded in-memory and no credentials
 are required. Local hosting tests do not establish successful Render deployment.
 See `HOSTING.md` and `USEFULNESS_AND_PILOT.md` for limits and operator review.
+
+## Public service and console refinement
+
+The public demo is now deployed at https://water-diagnostics-demo.onrender.com.
+Live checks passed for `/health`, the saved April 12 gap report, free local
+investigation/report download and both simulated recovery outcomes. Direct
+requests to paid inference and guidance routes were rejected. Details are in
+`public-demo-check.json`. This service offers recorded data and free local
+execution; public fresh model inference, private telemetry and hardware access
+remain unavailable.
+
+The console refinement keeps the established font/palette, joins the chart and
+decision area, makes the free public action primary and annotates explicit
+missing entries without filling values. Direct USGS/EPA reference links are
+separate from optional Tavily results. Local browser checks passed at 1365,
+1024, 768 and 390 px, including the 162-entry annotation, chronology, downloads,
+playback/reduced motion and both recovery outcomes. The paid ledger stayed
+unchanged, no browser errors/overflow were found and the manual UI scan returned
+no findings. This refinement made no paid model or search calls.
