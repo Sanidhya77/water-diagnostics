@@ -50,6 +50,9 @@ is our project-fit judgment, not an eligibility guarantee.
 
 ## Repository and submission materials
 
+- [x] Prepare local Devpost copy and recording steps in `SUBMISSION_DRAFT.md`.
+  Video URL, free hosted judge access and final submission remain pending.
+
 - [x] Add an MIT source license; data and fonts retain their separate licenses.
 - [x] Prepare a public GitHub/GitLab/Bitbucket repository with README, source,
   assets, setup instructions and a clear Nebius/NVIDIA architecture explanation.

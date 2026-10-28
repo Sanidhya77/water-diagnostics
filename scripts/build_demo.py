@@ -20,7 +20,8 @@ REPORTS = (
 )
 FIXED_FILES = (
     "README.md", "JUDGE_GUIDE.md", "THIRD_PARTY.md", "LICENSE", "DESIGN.md",
-    "requirements.txt", "pyproject.toml", ".env.example", ".gitignore",
+    "requirements.txt", "requirements-tested.txt", "run_demo.py", "verify_setup.py",
+    "pyproject.toml", ".env.example", ".gitignore", "SUBMISSION_DRAFT.md",
     "scripts/build_demo.py", "SUBMISSION_CHECKLIST.md", "DEMO_SCRIPT.md", "EVALUATION_PLAN.md",
     "data/river/udall-2024-04-01/observations.json",
     "data/river/udall-2024-04-01/context.json",

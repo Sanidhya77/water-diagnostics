@@ -10,10 +10,18 @@ labels. Avoid spending calls while rehearsing; the supplied walkthrough is free.
 | 0:45–1:15 | Open an evidence check, report alternatives and citation | “Nemotron runs on Nebius Token Factory. It selects from five read-only tools. Python performs the checks and constrains conclusions, citations and report wording. This saved result remains uncertain and requests an independent measurement.” |
 | 1:15–1:40 | Switch through held sensor reading, process change and ambiguous evidence | “Three designed synthetic fixtures exercise different outcomes. These are saved hosted runs, not new inference or an accuracy benchmark. The local validation audits their evidence.” |
 | 1:40–2:10 | Recovery succeeds, then stays offline | “A separate local policy permits one simulated collector reconnect. The success needs new verified packets. The failure records an escalation. No real hardware operates and no alert is sent.” |
-| 2:10–2:30 | Download report; show reference guidance if a verified cached result exists | “The operator receives the evidence and next requested check. Optional Tavily guidance supplies current background, kept separate from historical incident evidence.” |
+| 2:10–2:30 | Download report; show the published additional-week comparison | “A second week includes 162 missing turbidity entries. Three fixed local replays preserve those gaps and uncertainty. These checks evaluate the workflow, not model accuracy.” |
 | 2:30–2:45 | Finish on signal and decision | “The prototype combines a hosted NVIDIA model with deterministic checks and an auditable report. The next field step is a read-only collector pilot, with Raspberry Pi as a possible gateway.” |
 
 Before recording, confirm every shown report matches its visible provenance.
+
+Start the existing local app with
+`.\.venv\Scripts\python.exe -m water_diagnostics serve`, then open the address
+printed by the server. Rehearse with saved results, Run local checks and the
+recovery controls; none of those actions needs new inference. Have the actual
+additional-week comparison open for the 2:10 segment:
+https://github.com/Sanidhya77/water-diagnostics/blob/main/evaluations/river-holdout-2024-04-08/reviewed-checks/comparison.md
+
 If showing fresh hosted inference, record an actual successful explicit run and
 identify it as fresh; do not relabel a saved run. If Tavily is not demonstrated,
 describe it as optional and do not imply that a runtime lookup happened on camera.

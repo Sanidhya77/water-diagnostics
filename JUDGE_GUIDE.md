@@ -14,14 +14,18 @@ On Windows, use a short extraction location such as `water-demo` in your home
 folder; deeply nested OneDrive paths can exceed Windows path-length limits.
 
 ```powershell
-py -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m water_diagnostics serve
+py run_demo.py
 ```
+
+This creates the isolated environment, installs the tested dependencies and
+starts the app. `py run_demo.py --check` verifies the saved demo without a model
+request. If the default port is busy, use `py run_demo.py --port 8766`.
 
 Open the local URL printed by the server. Activation is optional when using
 these full Python paths. No Conda, model download, GPU or VM is required.
-On macOS/Linux use `python3 -m venv .venv` and `.venv/bin/python` instead.
+On macOS/Linux use `python3 run_demo.py` instead. For manual setup, create `.venv`,
+install `requirements-tested.txt` and run `python -m water_diagnostics serve`
+with that environment's Python interpreter. Python 3.12 is the release-test target.
 Dependency installation needs an internet connection; the free walkthrough
 itself does not. The build contains sample data, not the original research ZIPs.
 

@@ -16,8 +16,6 @@ def main() -> None:
         ("httpx", "httpx"),
         ("dotenv", "python-dotenv"),
         ("pydantic", "pydantic"),
-        ("pandas", "pandas"),
-        ("numpy", "numpy"),
         ("pytest", "pytest"),
     ):
         importlib.import_module(module_name)

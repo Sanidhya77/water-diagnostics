@@ -1,6 +1,6 @@
 """Local Nano-only cost guard; not a substitute for Nebius account billing.
 
-Rates checked against Nebius's model page on 2026-10-14. Reservations use
+Rates rechecked against Nebius's public model catalog on 2026-10-28. Reservations use
 UTF-8 payload bytes plus framing headroom, maximum output, and a 2x margin.
 Only token counters and estimates are saved, never keys, prompts or responses.
 """
@@ -18,7 +18,7 @@ INPUT_USD_PER_MILLION = 0.06
 OUTPUT_USD_PER_MILLION = 0.24
 PROJECT_CAP_USD = 5.0
 RUN_CAP_USD = 0.02
-PRICING_SOURCE = "https://nebius.com/services/token-factory/models/nvidia-nemotron-models-inference"
+PRICING_SOURCE = "https://tokenfactory.nebius.com/api/public/models_info"
 
 
 class BudgetError(RuntimeError):
@@ -49,7 +49,7 @@ class CostGuard:
 
     def _read(self) -> dict:
         if not self.path.exists():
-            return {"version": 1, "pricing_checked_on": "2026-10-14",
+            return {"version": 1, "pricing_checked_on": "2026-10-28",
                     "pricing_source": PRICING_SOURCE, "requests": []}
         try:
             state = json.loads(self.path.read_text(encoding="utf-8"))

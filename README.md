@@ -19,8 +19,20 @@ walkthrough. No model download, GPU, VM or original research ZIP is required.
 Python 3.11 or newer, from this project folder in PowerShell:
 
 ```powershell
+py run_demo.py
+```
+
+The launcher creates `.venv` and installs `requirements-tested.txt` on first use,
+then starts the local server. On macOS/Linux use `python3 run_demo.py`.
+Use `--check` to verify the saved demo without inference, or `--port 8766` if the
+default port is busy. Setup requires internet access; saved/local investigations
+do not. Python 3.12 is the release-test target.
+
+Manual setup is also available:
+
+```powershell
 py -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip install -r requirements-tested.txt
 .\.venv\Scripts\python.exe -m water_diagnostics serve
 ```
 
