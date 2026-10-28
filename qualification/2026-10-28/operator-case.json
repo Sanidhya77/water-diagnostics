@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-28",
+  "dataset": "udall-2024-04-08",
+  "clock": "2024-04-12T00:00:00Z",
+  "fresh_inference": true,
+  "seconds": 29.059,
+  "status": "complete",
+  "audit_passed": true,
+  "issues": [],
+  "missing_values": 162,
+  "checks": 5,
+  "actions": [
+    "Review the 162 missing original turbidity entries in R02 against time-matched collector power and logging records. The latest received sample is fresh, but the earlier gap remains unresolved.",
+    "Review the technician visit records in R04 for documented maintenance, battery or logging changes. Confirm the interruption against collector logs; the notes alone do not establish the cause of every missing entry.",
+    "Ask a qualified operator for a time-matched independent turbidity measurement using the site's approved procedure.",
+    "Request device fault records and review the original technician notes and readings around the visit."
+  ],
+  "usage": {
+    "requests": 6,
+    "requests_with_usage": 6,
+    "reported_cost_estimate_usd": 0.000711,
+    "conservative_accounted_usd": 0.01229292
+  },
+  "scope": "One selected recorded-data workflow with Python-owned recommendations; not field validation."
+}

@@ -72,3 +72,36 @@ conservative reservations. All 102 requests returned usage counters.
 These are local estimates/reservations, not an invoice or account balance.
 Nebius billing is authoritative. No training or paid GPU VM was used. The old
 project ledger retains its earlier unknown-usage reservations; it was not reset.
+
+## Operator-workflow and public-demo follow-up
+
+The additional river week is now selectable in the dashboard. Gap/stale
+telemetry leads to a specific request for collector power/logging review,
+followed by available technician context and independent measurement requests.
+Python owns this wording; the model selects the executed tools and constrained
+report. The previous saved April 12 report is preserved in `history/`.
+
+One fresh April 12 investigation passed all five evidence checks and the new
+gap-first action audit in **29.059 seconds**. Six API requests returned usage:
+**$0.000711** token estimate, **$0.01229292** conservative reservations. Full
+details are in `operator-case.json`. This was one selected development run,
+not field validation. No automatic retry was used.
+
+The combined October 28 qualification (initial runs, browser live run and this
+follow-up) used **108 requests**, **$0.01618728** in token estimates and
+**$0.22398192** in conservative reservations. All 108 returned usage counters.
+The unchanged $5 project and $0.02/run guards remained active.
+
+The current local suite passed **166 tests**. New checks cover the second-week
+selection, gap-specific recommendations, HTTPS Host/Origin handling and the
+public-demo API block. Browser checks exercised the public-mode week switch,
+before-gap note exclusion, local investigation, downloads, playback and both
+recovery outcomes. No browser errors or page overflow at 1365, 1024, 768 or
+390 px were observed; the paid ledger stayed unchanged. The manual UI detector
+flagged the existing inset source-toggle group as nested cards; it is an
+intentional segmented control, not nested content cards.
+
+`render.yaml` configures one Free Python service. In public mode paid APIs are
+disabled server-side, generated results are bounded in-memory and no credentials
+are required. Local hosting tests do not establish successful Render deployment.
+See `HOSTING.md` and `USEFULNESS_AND_PILOT.md` for limits and operator review.

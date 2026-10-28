@@ -14,7 +14,7 @@ py run_demo.py --check
 On macOS/Linux use `python3 run_demo.py --check`. This installs the tested
 dependencies if necessary and audits the three saved demonstration cases.
 It makes no new inference request. You do not need to rerun the entire test
-suite before each recording; the release suite already passed 159 local tests.
+suite before each recording; the current suite passed 166 local tests.
 
 ## 2. Start the product
 
@@ -32,7 +32,11 @@ restart the server for live inference. Saved reports and local checks need no ke
 Follow `DEMO_SCRIPT.md`. Start with the real river replay, show one fresh
 Run with Nemotron, open the evidence and report, switch to the contrasting
 synthetic cases, then demonstrate collector recovery and recorded escalation.
-Finish with the report download and additional-week evidence.
+Finish with **River replay → Apr 8–14 · recorded data gap → After gap**. Show
+the gap, the request to review power/logging records and available technician
+notes, then download the report. The latest sample being fresh does not erase
+the earlier 162 missing entries. Use `USEFULNESS_AND_PILOT.md` for the operator
+problem and the next real review step; do not claim a deployed field study.
 
 The fresh browser run completed in 9.3 seconds during qualification, but timing
 can vary. If editing out waiting time, label the cut; do not represent a saved
@@ -59,7 +63,10 @@ This is a local test build with a hosted-model option, not a deployed public web
 service. Python 3.12 is the tested release target; fresh inference needs internet
 and a valid server-side Nebius key. No Raspberry Pi or treatment equipment is used.
 Public hosted access funded by the entrant is not configured; do not describe it
-as available or publish a shared key. Confirm free judge access to the demonstrated
+as available or publish a shared key. `HOSTING.md` now provides a Free Render
+configuration for saved results, free checks and recovery simulations, with
+paid APIs blocked. It has to be deployed and checked before sharing a live URL.
+Confirm free judge access to the demonstrated
 functionality using the final testing arrangement.
 
 Official rules checked October 28:

@@ -20,6 +20,7 @@ REPORTS = (
 )
 FIXED_FILES = (
     "README.md", "JUDGE_GUIDE.md", "THIRD_PARTY.md", "LICENSE", "DESIGN.md",
+    "HOSTING.md", "USEFULNESS_AND_PILOT.md", "render.yaml", ".python-version",
     "requirements.txt", "requirements-tested.txt", "run_demo.py", "verify_setup.py",
     "pyproject.toml", ".env.example", ".gitignore", "SUBMISSION_DRAFT.md", "RECORD_TODAY.md",
     ".github/workflows/verify.yml", "demo_reports/README.md",
@@ -50,10 +51,12 @@ def release_files(root=ROOT):
     files.update(root / "demo_reports" / (stem + suffix) for stem in demo_stems for suffix in (".json", ".md"))
     qualification = root / "qualification/2026-10-28"
     files.update(qualification / name for name in (
-        "README.md", "fresh-results.json", "browser-api-check.json", "fresh-install.json",
+        "README.md", "fresh-results.json", "browser-api-check.json", "fresh-install.json", "operator-case.json",
         "history/phase-1.json", "history/phase-2.json", "history/phase-3.json",
         "history/incomplete-RIVER-udall-20240402T220000Z-nebius.json",
-        "history/incomplete-RIVER-udall-20240402T220000Z-nebius.md"))
+        "history/incomplete-RIVER-udall-20240402T220000Z-nebius.md",
+        "history/before-operator-actions-RIVER-udall-20240412T000000Z-nebius.json",
+        "history/before-operator-actions-RIVER-udall-20240412T000000Z-nebius.md"))
     for run in ("local-checks", "reviewed-checks"):
         folder = root / "evaluations/river-holdout-2024-04-08" / run
         files.update(folder / (stem + suffix)

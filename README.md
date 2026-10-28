@@ -48,6 +48,10 @@ not. These commands do not require activation or Conda.
   cleaning visit at Udall on the Poudre River. The bundled April 1–7, 2024 subset
   contains original observations and available visit context. Future readings,
   unavailable notes and retrospective QC answers stay outside the investigation.
+- **Recorded data-gap case:** choose Apr 8–14, then After gap. The latest sample
+  is fresh, but 162 original turbidity entries are missing in the preceding 48
+  hours. The report prioritizes time-matched power/logging records and available
+  battery/maintenance notes, while preserving uncertainty about causation.
 - **Signal inspection:** play, pause or scrub through actual recorded samples.
   The chart keeps gaps and the selected replay clock. Playback changes no report
   or evidence. Reduced motion uses a Next sample control.
@@ -70,6 +74,13 @@ not. These commands do not require activation or Conda.
 
 Opening the page, changing cases, playback, saved results, local checks and
 recovery simulations make no paid API calls.
+
+[Free hosting instructions](HOSTING.md) describe the prepared Render demo mode.
+It blocks paid providers on the server and keeps generated reports in bounded
+memory. Account connection and successful deployment are still required; no
+public URL is claimed here. The local build retains optional fresh inference.
+See [usefulness and operator review](USEFULNESS_AND_PILOT.md) for the documented
+operator need, implemented backend behavior and a short review protocol.
 
 ## Hosted model and architecture
 
@@ -117,7 +128,7 @@ no hardware, GPIO, shell, process-restart or device-network interface.
 .\.venv\Scripts\python.exe -m water_diagnostics validate-demo --mode saved
 ```
 
-The October 28 local suite passed 159 tests. The release qualification completed
+The October 28 local suite passed 166 tests. The initial release qualification completed
 nine fresh hosted investigations: six designed synthetic fixtures and three
 selected river clocks. All completed five checks and passed evidence audits.
 Observed times were 6.7–12.1 seconds, with a separate browser API test at 9.3 seconds.
@@ -163,6 +174,12 @@ Devpost entry is created by the build.
 See [EVALUATION_PLAN.md](EVALUATION_PLAN.md) for the completed additional-week
 checks and the later hosted-review plan. More data is for evaluating the workflow;
 no training job is part of this build.
+
+After adding the gap-specific operator requests, one more fresh hosted April 12
+investigation passed all five evidence checks in 29.1 seconds. Its estimated
+token cost was $0.000711, with $0.01229292 conservatively reserved. The prior
+saved gap report is preserved in qualification history. This selected workflow
+check does not establish field usefulness or a latency guarantee.
 
 ## Boundaries and licenses
 

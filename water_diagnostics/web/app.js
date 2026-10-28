@@ -13,7 +13,7 @@ const causeNames = {
   communication_loss: "Possible communication loss", maintenance_disturbance: "Maintenance disturbance",
   normal_behaviour: "Current readings within the demo limits", insufficient_evidence: "Unresolved origin"
 };
-const state = {source: "river", case: "frozen", at: "2024-04-03T00:00:00Z", busy: false,
+const state = {source: "river", case: "frozen", dataset: "udall-2024-04-01", publicDemo: false, at: "2024-04-03T00:00:00Z", busy: false,
   loading: false, guidanceBusy: false, recoveryBusy: false, chartHours: 6, generation: 0, replay: null, report: null,
   displayMode: null, signal: null, playback: null, completedTools: new Set(), evidence: new Map(), selectedTool: null};
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -29,7 +29,7 @@ const icon = (name) => {
   const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
   use.setAttribute("href", "#i-" + name); element.appendChild(use); return element;
 };
-const choice = (mode = "offline") => ({source: state.source, case: state.case, at: state.at, mode});
+const choice = (mode = "offline") => ({source: state.source, case: state.case, dataset: state.dataset, at: state.at, mode});
 const query = (mode) => new URLSearchParams(choice(mode)).toString();
 
 async function request(path, options = {}) {
@@ -45,8 +45,9 @@ function message(text, error = false) {
 }
 function lockControls() {
   const disabled = state.busy || state.loading || state.guidanceBusy || state.recoveryBusy;
-  for (const id of ["run-local", "run-ai", "river-tab", "simulation-tab", "before-visit", "after-visit", "update-replay", "replay-clock", "scenario"]) $(id).disabled = disabled;
-  $("lookup-guidance").disabled = disabled;
+  for (const id of ["run-local", "river-tab", "simulation-tab", "before-visit", "after-visit", "update-replay", "replay-clock", "scenario", "river-period"]) $(id).disabled = disabled;
+  $("run-ai").disabled = disabled || state.publicDemo;
+  $("lookup-guidance").disabled = disabled || state.publicDemo;
   $("run-recovery").disabled = disabled;
   $("recovery-case").disabled = disabled;
   $("play-signal").disabled = disabled || !state.signal || state.signal.points.length < 2;
@@ -195,7 +196,8 @@ function drawChart(data) {
     const time = new Date(event.time).getTime();
     if (time < first || time > last) continue;
     svgElement("line", {x1: x(time), x2: x(time), y1: top, y2: bottom, class: "chart-event"}, svg);
-    svgElement("text", {x: Math.min(x(time) - 7, right), y: top - 8, "text-anchor": "end", class: "chart-event-label"}, svg, event.label);
+    const nearStart = x(time) < (left + right) / 2;
+    svgElement("text", {x: x(time) + (nearStart ? 7 : -7), y: top - 8, "text-anchor": nearStart ? "start" : "end", class: "chart-event-label"}, svg, event.label);
   }
   const hover = svgElement("circle", {r: 4, fill: "#d7e6d9", stroke: "#173b33", "stroke-width": 2, visibility: "hidden"}, svg);
   const crosshair = svgElement("line", {y1:top,y2:bottom,class:"chart-crosshair",visibility:"hidden"}, svg);
@@ -293,7 +295,8 @@ function renderReport(report, saved = false) {
     ? (ai ? "Saved Nemotron investigation · Loaded locally; no new API request." : "Saved local reference · No model called.")
     : (ai ? "NVIDIA Nemotron · Investigated through the Nebius API." : "Local reference investigation · No model called.");
   const titles = {sensor_problem: "Evidence suggests a sensor problem.", normal_behaviour: "Review the earlier excursion.", process_change: "Corroborating process evidence.", communication_loss: "A gap in received telemetry.", maintenance_disturbance: "Review the maintenance timing."};
-  $("report-title").textContent = report.status === "incomplete" ? "Investigation stopped early." : (titles[report.conclusion] || "The cause remains unresolved.");
+  const dataGap = report.hypotheses.some(item => item.name === "data_availability_issue");
+  $("report-title").textContent = report.status === "incomplete" ? "Investigation stopped early." : (dataGap ? "Missing data needs operator review." : (titles[report.conclusion] || "The cause remains unresolved."));
   $("brief-title").textContent = $("report-title").textContent;
   $("brief-provenance").textContent = $("report-provenance").textContent;
   $("brief-next-label").textContent = "Next operator action · requested";
@@ -346,6 +349,9 @@ async function loadReplay() {
     const data = await request("/api/replay?" + query());
     if (generation !== state.generation) return;
     state.replay = data;
+    state.publicDemo = Boolean(data.capabilities?.public_demo);
+    $("deployment-note").hidden = !state.publicDemo;
+    $("ai-run-note").textContent = state.publicDemo ? "Fresh API calls: use the local build" : "Uses credits · $0.02 guard";
     const summary = data.summary;
     $("source-badge").textContent = summary.source_label;
     $("source-badge").className = "source-badge" + (state.source === "simulated" ? " simulated" : "");
@@ -409,8 +415,20 @@ function preset(at, before) {
 }
 $("river-tab").addEventListener("click", () => sourceTab("river"));
 $("simulation-tab").addEventListener("click", () => sourceTab("simulated"));
-$("before-visit").addEventListener("click", () => preset("2024-04-02T22:00:00Z", true));
-$("after-visit").addEventListener("click", () => preset("2024-04-03T00:00:00Z", false));
+$("before-visit").addEventListener("click", () => preset(state.replay.river_replays[state.dataset].before, true));
+$("after-visit").addEventListener("click", () => preset(state.replay.river_replays[state.dataset].after, false));
+$("river-period").addEventListener("change", () => {
+  state.dataset = $("river-period").value;
+  const period = state.replay.river_replays[state.dataset];
+  $("replay-clock").min = period.min; $("replay-clock").max = period.max;
+  $("before-visit").textContent = period.before_label; $("after-visit").textContent = period.after_label;
+  state.chartHours = period.hours;
+  for (const button of $("chart-windows").querySelectorAll("button")) {
+    const selected = Number(button.dataset.hours) === state.chartHours;
+    button.classList.toggle("selected", selected); button.setAttribute("aria-pressed", String(selected));
+  }
+  preset(period.after, false);
+});
 $("update-replay").addEventListener("click", () => {
   if (!$("replay-clock").reportValidity()) return;
   const clock = $("replay-clock").value;

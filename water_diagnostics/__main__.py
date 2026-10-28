@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -28,6 +29,8 @@ def main() -> int:
     sub.add_parser("budget-status", help="Read local usage estimates and conservative limits; no network")
     interface = sub.add_parser("serve", help="Open a local operator interface; browsing and local checks use no credits")
     interface.add_argument("--port", type=int, default=8765)
+    interface.add_argument("--host", choices=("127.0.0.1", "0.0.0.0"), default="127.0.0.1")
+    interface.add_argument("--public-demo", action="store_true", help="Disable paid APIs and keep generated reports in memory")
     export = sub.add_parser("export-replays", help="Save inspectable simulated inputs; no network")
     export.add_argument("--output", type=Path, default=PROJECT_ROOT / "reports" / "replays")
     run = sub.add_parser("run", help="Investigate one simulated incident and save JSON + Markdown")
@@ -81,7 +84,10 @@ def main() -> int:
             if not 1024 <= args.port <= 65535:
                 parser.error("Choose a local port between 1024 and 65535.")
             try:
-                serve(args.port)
+                if args.host == "0.0.0.0" and not args.public_demo:
+                    parser.error("External binding requires --public-demo; paid provider requests stay disabled.")
+                serve(args.port, bind_address=args.host, public_demo=args.public_demo,
+                      public_origin=os.environ.get("RENDER_EXTERNAL_URL") if args.public_demo else None)
             except OSError:
                 print("Could not start the local interface. Try --port 8766 if the address is already in use.", file=sys.stderr)
                 return 2

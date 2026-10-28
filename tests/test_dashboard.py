@@ -135,6 +135,33 @@ def test_replay_and_mode_validation_rejects_unsupported_inputs(interface):
     assert client.get("/api/download", params={"source": "river", "mode": "nebius"}).status_code == 404
 
 
+def test_additional_week_uses_its_own_inputs_and_rejects_paths(interface):
+    app, _, client, _ = interface
+    from datetime import timedelta
+    from water_diagnostics.river_data import utc_time
+    target = app.root / "data/river/udall-2024-04-08"
+    target.mkdir(parents=True)
+    for name in ("observations.json", "context.json"):
+        data = json.loads((app.river_directory / name).read_text(encoding="utf-8"))
+        if name == "observations.json":
+            for key in ("start_utc", "end_exclusive_utc"):
+                data[key] = (utc_time(data[key]) + timedelta(days=7)).isoformat()
+            for row in data["records"]:
+                row["timestamp"] = (utc_time(row["timestamp"]) + timedelta(days=7)).isoformat()
+        else:
+            for row in data["visit_records"]:
+                for key in ("visit_time_utc", "assumed_available_at_utc"):
+                    row[key] = (utc_time(row[key]) + timedelta(days=7)).isoformat()
+        (target / name).write_text(json.dumps(data), encoding="utf-8")
+    (target / "evaluation.json").write_text("SECOND_WEEK_EVALUATOR_SECRET")
+    response = client.get("/api/replay", params={"dataset": "udall-2024-04-08", "at": "2024-04-10T00:00:00Z"})
+    assert response.status_code == 200
+    assert response.json()["summary"]["latest"] == 1.0
+    assert "SECOND_WEEK_EVALUATOR_SECRET" not in response.text
+    assert client.get("/api/replay", params={"dataset": "../../.env"}).status_code == 400
+    assert client.get("/api/replay", params={"dataset": "udall-2024-04-08", "at": "2024-04-03T00:00:00Z"}).status_code == 400
+
+
 def test_guidance_requires_explicit_same_origin_request_and_valid_replay(interface):
     app, _, client, address = interface
     sent = []

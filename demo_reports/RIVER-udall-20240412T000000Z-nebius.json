@@ -11,18 +11,6 @@
   "observations": [
     {
       "evidence_id": "R01",
-      "tool": "check_freshness",
-      "source": "REAL_RIVER_SENSOR_DATA",
-      "data": {
-        "expected_interval_seconds": 900,
-        "sample_count": 193,
-        "missing_value_count": 162,
-        "latest_usable_age_seconds": 0.0,
-        "fresh": true
-      }
-    },
-    {
-      "evidence_id": "R02",
       "tool": "check_variation",
       "source": "REAL_RIVER_SENSOR_DATA",
       "data": {
@@ -37,6 +25,18 @@
         "earlier_history_median_ntu": 0.7765,
         "trailing_identical_count": 1,
         "regulatory_alarm_threshold_applied": false
+      }
+    },
+    {
+      "evidence_id": "R02",
+      "tool": "check_freshness",
+      "source": "REAL_RIVER_SENSOR_DATA",
+      "data": {
+        "expected_interval_seconds": 900,
+        "sample_count": 193,
+        "missing_value_count": 162,
+        "latest_usable_age_seconds": 0.0,
+        "fresh": true
       }
     },
     {
@@ -57,6 +57,35 @@
     },
     {
       "evidence_id": "R04",
+      "tool": "check_maintenance_context",
+      "source": "REAL_RIVER_SENSOR_DATA",
+      "data": {
+        "availability_assumption": "Historical replay assumption: visit notes become available at the next UTC midnight. The source provides visit times, not the actual times when notes were entered.",
+        "recorded_visits_visible_at_replay_clock": [
+          {
+            "visit_time_utc": "2024-04-10T00:45:00Z",
+            "assumed_available_at_utc": "2024-04-11T00:00:00+00:00",
+            "sensors_cleaned": "TRUE",
+            "calibrations_recorded": "pH, ORP, Turb, Conductivity, RDO",
+            "reported_sensor_issue": "NA",
+            "visit_comments": "Calibrations went well. I swapped the batteries and the aqua troll would not power up. I took the rechargeable batteries out out the sensor and left the sonde in the housing without batteries. The recharge batteries are recharging at the lab. I downloaded the log and started a new one. However it is not logging due to battery issue",
+            "source": "historical_technician_record"
+          },
+          {
+            "visit_time_utc": "2024-04-11T16:30:00Z",
+            "assumed_available_at_utc": "2024-04-12T00:00:00+00:00",
+            "sensors_cleaned": "TRUE",
+            "calibrations_recorded": "FDOM",
+            "reported_sensor_issue": "NA",
+            "visit_comments": "Jed had pulled sonde due to battery issues. Came to site to replace batteries, calibrate FDOM and deploy sonde. Calibration went just fine. Rechargeable batteries have low voltage, 27%. Will need to replace batteries soon but wanted to have log running. could not synchronize upon start a visit, but was able to test upload just fine. Low flows at housing today, modified a few rocks to increase flows at low flow housing, and cleaned algae from high flow housing.",
+            "source": "historical_technician_record"
+          }
+        ],
+        "physical_test_executed_by_agent": false
+      }
+    },
+    {
+      "evidence_id": "R05",
       "tool": "check_related_measurements",
       "source": "REAL_RIVER_SENSOR_DATA",
       "data": {
@@ -120,53 +149,24 @@
         ],
         "independent_turbidity_measurement_available": false
       }
-    },
-    {
-      "evidence_id": "R05",
-      "tool": "check_maintenance_context",
-      "source": "REAL_RIVER_SENSOR_DATA",
-      "data": {
-        "availability_assumption": "Historical replay assumption: visit notes become available at the next UTC midnight. The source provides visit times, not the actual times when notes were entered.",
-        "recorded_visits_visible_at_replay_clock": [
-          {
-            "visit_time_utc": "2024-04-10T00:45:00Z",
-            "assumed_available_at_utc": "2024-04-11T00:00:00+00:00",
-            "sensors_cleaned": "TRUE",
-            "calibrations_recorded": "pH, ORP, Turb, Conductivity, RDO",
-            "reported_sensor_issue": "NA",
-            "visit_comments": "Calibrations went well. I swapped the batteries and the aqua troll would not power up. I took the rechargeable batteries out out the sensor and left the sonde in the housing without batteries. The recharge batteries are recharging at the lab. I downloaded the log and started a new one. However it is not logging due to battery issue",
-            "source": "historical_technician_record"
-          },
-          {
-            "visit_time_utc": "2024-04-11T16:30:00Z",
-            "assumed_available_at_utc": "2024-04-12T00:00:00+00:00",
-            "sensors_cleaned": "TRUE",
-            "calibrations_recorded": "FDOM",
-            "reported_sensor_issue": "NA",
-            "visit_comments": "Jed had pulled sonde due to battery issues. Came to site to replace batteries, calibrate FDOM and deploy sonde. Calibration went just fine. Rechargeable batteries have low voltage, 27%. Will need to replace batteries soon but wanted to have log running. could not synchronize upon start a visit, but was able to test upload just fine. Low flows at housing today, modified a few rocks to increase flows at low flow housing, and cleaned algae from high flow housing.",
-            "source": "historical_technician_record"
-          }
-        ],
-        "physical_test_executed_by_agent": false
-      }
     }
   ],
   "checks_performed": [
-    "check_freshness",
     "check_variation",
+    "check_freshness",
     "check_device_status",
-    "check_related_measurements",
-    "check_maintenance_context"
+    "check_maintenance_context",
+    "check_related_measurements"
   ],
   "tool_attempts": [
     {
-      "tool": "check_freshness",
+      "tool": "check_variation",
       "status": "performed",
       "evidence_id": "R01",
       "reason": null
     },
     {
-      "tool": "check_variation",
+      "tool": "check_freshness",
       "status": "performed",
       "evidence_id": "R02",
       "reason": null
@@ -178,13 +178,13 @@
       "reason": null
     },
     {
-      "tool": "check_related_measurements",
+      "tool": "check_maintenance_context",
       "status": "performed",
       "evidence_id": "R04",
       "reason": null
     },
     {
-      "tool": "check_maintenance_context",
+      "tool": "check_related_measurements",
       "status": "performed",
       "evidence_id": "R05",
       "reason": null
@@ -194,21 +194,21 @@
     {
       "cause": "sensor_artifact_possible",
       "relevant_evidence_ids": [
-        "R02",
-        "R04"
+        "R01",
+        "R05"
       ]
     },
     {
       "cause": "river_change_possible",
       "relevant_evidence_ids": [
-        "R02",
-        "R04"
+        "R01",
+        "R05"
       ]
     },
     {
       "cause": "data_availability_issue",
       "relevant_evidence_ids": [
-        "R01"
+        "R02"
       ]
     }
   ],
@@ -221,6 +221,14 @@
     "Historical replay assumption: visit notes become available at the next UTC midnight. The source provides visit times, not the actual times when notes were entered."
   ],
   "suggested_operator_actions": [
+    {
+      "action": "Review the 162 missing original turbidity entries in R02 against time-matched collector power and logging records. The latest received sample is fresh, but the earlier gap remains unresolved.",
+      "status": "requested_not_performed"
+    },
+    {
+      "action": "Review the technician visit records in R04 for documented maintenance, battery or logging changes. Confirm the interruption against collector logs; the notes alone do not establish the cause of every missing entry.",
+      "status": "requested_not_performed"
+    },
     {
       "action": "Ask a qualified operator for a time-matched independent turbidity measurement using the site's approved procedure.",
       "status": "requested_not_performed"

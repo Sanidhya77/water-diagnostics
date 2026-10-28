@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#173b33"><title>Water Diagnostics · Investigation workbench</title>
-<link rel="stylesheet" href="/style.css?v=console-6"><script src="/app.js?v=console-6" defer></script>
+<link rel="stylesheet" href="/style.css?v=operator-8"><script src="/app.js?v=operator-8" defer></script>
 </head>
 <body>
 <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
@@ -28,10 +28,11 @@
     <section class="case-heading"><div><h1 id="site-name">Udall · Poudre River, Colorado</h1><p>Turbidity investigation <span id="source-badge" class="source-badge">Historical river data</span></p></div><div class="case-context"><span><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg> Human review required</span><small>NVIDIA Nemotron on Nebius</small></div></section>
     <section class="replay-bar" aria-label="Replay selection">
       <div class="source-tabs" role="group" aria-label="Data source"><button id="river-tab" class="selected" aria-pressed="true">River replay</button><button id="simulation-tab" aria-pressed="false">Simulated cases</button></div>
-      <div id="river-controls" class="replay-controls"><div class="preset-buttons"><button id="before-visit">Before visit</button><button id="after-visit" class="selected">After visit</button></div><label class="clock-label" for="replay-clock">Replay clock <span>UTC</span><input id="replay-clock" type="datetime-local" min="2024-04-01T00:00" max="2024-04-07T23:59" value="2024-04-03T00:00" required></label><button id="update-replay" class="button small">Update replay<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+      <div id="river-controls" class="replay-controls"><label class="clock-label river-period" for="river-period">Recorded week<select id="river-period"><option value="udall-2024-04-01">Apr 1–7 · cleaning visit</option><option value="udall-2024-04-08">Apr 8–14 · recorded data gap</option></select></label><div class="preset-buttons"><button id="before-visit">Before visit</button><button id="after-visit" class="selected">After visit</button></div><label class="clock-label" for="replay-clock">Replay clock <span>UTC</span><input id="replay-clock" type="datetime-local" min="2024-04-01T00:00" max="2024-04-07T23:59" value="2024-04-03T00:00" required></label><button id="update-replay" class="button small">Update replay<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
       <div id="simulation-controls" class="replay-controls" hidden><label class="clock-label" for="scenario">Simulated scenario<select id="scenario"><option value="frozen">Held sensor reading</option><option value="normal">Brief excursion</option><option value="communication_loss">Missing telemetry</option><option value="maintenance">Maintenance disturbance</option><option value="process_change">Corroborating process change</option><option value="insufficient">Ambiguous evidence</option></select></label><a class="recovery-link" href="#recovery-demo">Try recovery simulation <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
     </section>
     <div id="message" class="message" role="status" aria-live="polite" hidden></div>
+    <p id="deployment-note" class="deployment-note" hidden>Public demo · Saved Nemotron reports, free local checks and recovery simulations. Fresh inference is available in the downloaded local build.</p>
     <a class="console-jump" href="#investigation-decision">Investigation &amp; run controls <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     <div class="console-layout">
     <section class="chart-panel" id="signal" aria-label="Recorded signal">
@@ -45,7 +46,7 @@
     <section class="investigation-brief" id="investigation-decision" aria-label="Investigation brief">
       <div class="brief-outcome"><h2 id="brief-title">Ready to investigate</h2><p id="brief-provenance">Start with the available evidence.</p></div>
       <div class="brief-next"><h3 id="brief-next-label">Get started</h3><p id="brief-next">Run the local checks or ask Nemotron to investigate this replay.</p><a class="brief-report-link" href="#report">Read investigation report <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-      <div class="run-controls"><div><button id="run-ai" class="button primary">Run with Nemotron <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button><small>Uses credits · $0.02 guard</small></div><div><button id="run-local" class="button secondary">Run local checks <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button><small>Free · no model call</small></div></div>
+      <div class="run-controls"><div><button id="run-ai" class="button primary">Run with Nemotron <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button><small id="ai-run-note">Uses credits · $0.02 guard</small></div><div><button id="run-local" class="button secondary">Run local checks <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button><small>Free · no model call</small></div></div>
     </section>
     </div>
     <section class="investigate-panel" id="evidence-workbench" aria-labelledby="evidence-heading">

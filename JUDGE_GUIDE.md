@@ -36,6 +36,10 @@ itself does not. The build contains sample data, not the original research ZIPs.
    the association is visible, but independent confirmation is missing.
 2. Use **Play signal** or select a recorded sample. Playback changes the chart
    only. Open an evidence check or report citation to inspect its actual result.
+   Choose **Apr 8–14 · recorded data gap → After gap** for the missing-data case:
+   162 missing original readings, available battery/logging notes, and a specific
+   operator request to review collector records. **Before gap** excludes the
+   later visit notes. This does not prove why every entry is missing.
 3. Choose **Simulated cases → Held sensor reading**, then **Corroborating
    process change** and **Ambiguous evidence**. These load saved hosted results
    with their provenance. They demonstrate contrasting designed fixtures.
@@ -88,3 +92,6 @@ does not read retrospective QC answers. Raspberry Pi collection is future work;
 physical repair, treatment control and nuclear qualification are not implemented.
 
 See `THIRD_PARTY.md` for the distributed public-data attribution and font license.
+For a Free Render demonstration with paid APIs blocked, see `HOSTING.md`.
+For the documented need and a ten-minute operator review, see
+`USEFULNESS_AND_PILOT.md`. A hosted demonstration is not field validation.

@@ -232,6 +232,7 @@
   .recovery-readback pre {white-space:pre-wrap;overflow-wrap:anywhere;max-height:360px;overflow:auto;margin:16px 0 0;padding:16px;background:var(--canvas);border-radius:6px;font: .75rem/1.8 Consolas,monospace}
   .message {padding:12px 16px;border:1px solid #c9d9c5;border-radius:6px;background:var(--green-light);color:var(--green);font-size:.8125rem;margin-top:16px}
   .message.error {background:#f8eee8;border-color:#e6cdbf;color:#8c4c30}
+  .deployment-note {padding:12px 16px;margin:0 0 16px;background:var(--green-light);border:1px solid var(--line);border-radius:6px;color:var(--green);font-size:.8125rem}
   @media(prefers-reduced-motion:reduce) {*,*::before,*::after {animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 }
 @layer responsive {
@@ -246,6 +247,7 @@
     .documents-layout {grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px}.chart-control-band {gap:20px}.signal-transport {grid-template-columns:108px minmax(90px,1fr);width:60%;gap:8px 12px}.playback-state {grid-column:1/-1;text-align:left}.chart-footer {align-self:start;padding-top:8px}
   }
   @media(max-width:700px) {
+    .river-period,.river-period select {width:100%;max-width:none}
     .app-header {flex-wrap:wrap;gap:0 16px;padding:12px 16px 0;position:static}.brand {font-size:.9375rem}.app-nav {order:3;width:100%;gap:24px;margin-top:8px}.app-nav a {min-height:40px}
     .page {padding:20px 16px}.case-heading {align-items:start}.case-context {display:none}h1 {font-size:1.375rem}.case-heading p {font-size:.75rem;gap:8px}.source-badge {font-size:.75rem}
     .recovery-panel {padding:20px 16px}.recovery-heading {flex-direction:column;gap:10px}.recovery-controls {align-items:stretch;gap:12px}.recovery-controls .clock-label,.recovery-controls .button {width:100%}.recovery-controls select {width:100%}.recovery-facts {gap:16px 24px}.recovery-readback pre {padding:12px}

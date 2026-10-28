@@ -8,7 +8,11 @@ all five checks and passed evidence audits before being copied here.
 The workbench loads these as **saved** investigations. Loading them makes no
 new model request. Press Run with Nemotron for fresh inference. Current-session
 results take precedence; older root `reports/` files remain a legacy fallback.
-No earlier development report or failed attempt was overwritten.
+The April 12 gap report was refreshed after the Python operator recommendations
+were made specific to missing/stale telemetry. Its previous version is preserved
+under `qualification/2026-10-28/history/before-operator-actions-*`. The refresh
+completed all five checks and its audit; details are in `operator-case.json`.
+No failed attempt was overwritten.
 
 There are six designed synthetic fixtures and three selected river replays.
 These are guarded model-plus-Python workflow checks, not field accuracy or an

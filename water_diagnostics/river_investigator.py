@@ -122,6 +122,25 @@ def _validate_draft(draft: RiverDraft, evidence: list[RiverEvidence]) -> None:
         raise ValueError("Include exactly the unresolved alternatives and evidence IDs supplied by the completed checks.")
 
 
+def operator_actions(evidence: list[RiverEvidence]) -> list[OperatorAction]:
+    by_tool = {item.tool: item for item in evidence}
+    actions = []
+    freshness = by_tool.get("check_freshness")
+    if freshness is not None:
+        data = freshness.data
+        if not data["fresh"]:
+            actions.append(OperatorAction(action=f"Ask a qualified operator to verify current collector heartbeat and power using the site's approved procedure. {freshness.evidence_id} shows stale or missing received telemetry; do not interpret it as current water conditions."))
+        elif data["missing_value_count"]:
+            actions.append(OperatorAction(action=f"Review the {data['missing_value_count']} missing original turbidity entries in {freshness.evidence_id} against time-matched collector power and logging records. The latest received sample is fresh, but the earlier gap remains unresolved."))
+        if actions:
+            maintenance = by_tool.get("check_maintenance_context")
+            if maintenance and maintenance.data["recorded_visits_visible_at_replay_clock"]:
+                actions.append(OperatorAction(action=f"Review the technician visit records in {maintenance.evidence_id} for documented maintenance, battery or logging changes. Confirm the interruption against collector logs; the notes alone do not establish the cause of every missing entry."))
+    actions += [OperatorAction(action="Ask a qualified operator for a time-matched independent turbidity measurement using the site's approved procedure."),
+                OperatorAction(action="Request device fault records and review the original technician notes and readings around the visit.")]
+    return actions
+
+
 def _make_report(snapshot: dict, evidence: list[RiverEvidence], attempts: list[ToolAttempt],
                  client: ChatClient | None, draft: RiverDraft | None = None,
                  failure: str | None = None) -> RiverReport:
@@ -147,8 +166,7 @@ def _make_report(snapshot: dict, evidence: list[RiverEvidence], attempts: list[T
         model=client.model if client else None, investigation_status="incomplete" if failure else "complete",
         observations=evidence, checks_performed=[e.tool for e in evidence], tool_attempts=attempts,
         possible_causes=draft.possible_causes if draft else [], uncertainty=uncertainty,
-        suggested_operator_actions=[OperatorAction(action="Ask a qualified operator for a time-matched independent turbidity measurement using the site's approved procedure."),
-            OperatorAction(action="Request device fault records and review the original technician notes and readings around the visit.")])
+        suggested_operator_actions=operator_actions(evidence))
 
 
 def investigate_river(directory: Path, at: str, client: ChatClient | None = None,

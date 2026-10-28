@@ -5,6 +5,13 @@ surface is in Operate mode: a person investigates a replay and decides which
 physical verification to request. The system and its evidence are the selling
 point. Design should make that work legible and memorable.
 
+The October 28 refinement adds a labelled Recorded week selector for two
+prepared Udall weeks. Its presets change between Before/After visit and
+Before/After gap, with matching date limits and chart windows. Public-demo mode
+shows its scope beside the replay controls and disables paid buttons with an
+explanation; enforcement also lives in the backend. The console identity and
+existing workflow remain. Gap-related reports lead with the logging/power review.
+
 ## Visual direction
 
 Keep the forest-green identity. Give the recorded signal a focused instrument
