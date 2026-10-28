@@ -4,7 +4,7 @@ from urllib.parse import urlsplit
 
 import httpx
 
-from water_diagnostics.config import Settings
+from water_diagnostics.config import DEFAULT_MODEL, Settings
 from water_diagnostics.model_client.budget import BudgetError, CostGuard
 
 
@@ -36,6 +36,11 @@ class NebiusClient:
                  max_tokens: int = 4096) -> dict:
         payload = {"model": self.model, "messages": messages, "temperature": 0,
                    "max_tokens": max_tokens}
+        if self.model == DEFAULT_MODEL:
+            # NVIDIA documents direct tool calling with thinking disabled. This
+            # avoids exhausting a small response budget on a hidden reasoning
+            # trace. The Nebius endpoint was verified with this parameter.
+            payload["chat_template_kwargs"] = {"enable_thinking": False}
         if tools:
             # At the report stage only submit_report is offered. An explicit
             # choice avoids another tool-selection/free-text generation step.

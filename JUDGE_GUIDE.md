@@ -76,9 +76,12 @@ do not put a shared secret in the public repository or ask judges to fund it.
 ```
 
 Saved validation audits three designed synthetic fixtures (seed 0), not an
-independent benchmark or field accuracy. They exercise the guarded
-model-plus-Python workflow. They include earlier report-protocol versions; the
-three cases were not all rerun under a single identical protocol.
+independent benchmark or field accuracy. Current curated reports come from the
+October 28 qualification: six fresh synthetic cases and three fresh river clocks
+under the same request configuration. All nine passed evidence audits. A separate
+browser run exercised fresh inference and report download. Earlier attempts are
+preserved in the qualification history and legacy reports. See
+`qualification/2026-10-28/README.md` for exact scope, timing and estimated costs.
 
 Real river replay and simulated filter-outlet cases remain separate. Runtime
 does not read retrospective QC answers. Raspberry Pi collection is future work;

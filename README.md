@@ -117,12 +117,19 @@ no hardware, GPIO, shell, process-restart or device-network interface.
 .\.venv\Scripts\python.exe -m water_diagnostics validate-demo --mode saved
 ```
 
-The October 22 local suite passed 155 tests. The bundled saved comparison audits
-three designed synthetic fixtures at seed 0. It matched all three expected
-outcomes without new inference. These checks describe the guarded
-model-plus-Python workflow; they are not an independent benchmark. The saved
-runs span earlier report-protocol versions and were not all rerun under one
-identical protocol. Saved inference has no new measured latency.
+The October 28 local suite passed 159 tests. The release qualification completed
+nine fresh hosted investigations: six designed synthetic fixtures and three
+selected river clocks. All completed five checks and passed evidence audits.
+Observed times were 6.7–12.1 seconds, with a separate browser API test at 9.3 seconds.
+These checks describe the guarded model-plus-Python workflow, not field accuracy
+or an independent benchmark. They are not a latency guarantee. Curated current
+reports are in `demo_reports/` and load as saved results without new inference;
+the earlier protocol attempts and a failed river run are preserved separately.
+
+The qualification found and fixed a river output-limit failure by using the
+Nano model's direct tool-calling mode (`enable_thinking=false`). See
+[the full qualification record](qualification/2026-10-28/README.md) for costs,
+attempt history, installation and browser checks.
 
 The UI was checked at 1365, 1024, 768 and 390 px, including playback, reduced
 motion, both recovery outcomes and downloads. Clean extracted source was checked

@@ -1,0 +1,214 @@
+{
+  "source": "REAL_RIVER_SENSOR_DATA",
+  "site": "udall",
+  "observed_at": "2024-04-02T22:00:00+00:00",
+  "source_url": "https://www.hydroshare.org/resource/63ede02dd7da44a5a3040fd9ad14ab15/",
+  "data_licence": "CC BY 4.0",
+  "investigation_mode": "nebius_model",
+  "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+  "investigation_status": "complete",
+  "conclusion": "insufficient_evidence",
+  "observations": [
+    {
+      "evidence_id": "R01",
+      "tool": "check_variation",
+      "source": "REAL_RIVER_SENSOR_DATA",
+      "data": {
+        "window_hours": 6,
+        "window_start_utc": "2024-04-02T16:00:00+00:00",
+        "usable_recent_count": 25,
+        "latest_ntu": 10.714,
+        "recent_min_ntu": 7.84,
+        "recent_max_ntu": 11.684,
+        "recent_mean_ntu": 9.96304,
+        "recent_stddev_ntu": 1.1243839728491332,
+        "earlier_history_median_ntu": 8.1585,
+        "trailing_identical_count": 1,
+        "regulatory_alarm_threshold_applied": false
+      }
+    },
+    {
+      "evidence_id": "R02",
+      "tool": "check_freshness",
+      "source": "REAL_RIVER_SENSOR_DATA",
+      "data": {
+        "expected_interval_seconds": 900,
+        "sample_count": 185,
+        "missing_value_count": 0,
+        "latest_usable_age_seconds": 0.0,
+        "fresh": true
+      }
+    },
+    {
+      "evidence_id": "R03",
+      "tool": "check_device_status",
+      "source": "REAL_RIVER_SENSOR_DATA",
+      "data": {
+        "available": false,
+        "reason": "No live heartbeat/fault log is supplied. Historical visit notes are separate context.",
+        "sensor_method": {
+          "parameter": "Turbidity",
+          "units": "NTU",
+          "sensor": "Aqua TROLL Turbidity Sensor",
+          "calibration_method": "Two-point calibration using 10 NTU and 100 NTU standards",
+          "Notes": ""
+        }
+      }
+    },
+    {
+      "evidence_id": "R04",
+      "tool": "check_maintenance_context",
+      "source": "REAL_RIVER_SENSOR_DATA",
+      "data": {
+        "availability_assumption": "Historical replay assumption: visit notes become available at the next UTC midnight. The source provides visit times, not the actual times when notes were entered.",
+        "recorded_visits_visible_at_replay_clock": [],
+        "physical_test_executed_by_agent": false
+      }
+    },
+    {
+      "evidence_id": "R05",
+      "tool": "check_related_measurements",
+      "source": "REAL_RIVER_SENSOR_DATA",
+      "data": {
+        "signals": [
+          {
+            "parameter": "Chl-a Fluorescence",
+            "units": "RFU",
+            "latest_value": 0.022,
+            "latest_timestamp": "2024-04-02T22:00:00Z",
+            "age_seconds": 0.0,
+            "independent_turbidity_reference": false
+          },
+          {
+            "parameter": "DO",
+            "units": "mg/L",
+            "latest_value": 10.264,
+            "latest_timestamp": "2024-04-02T22:00:00Z",
+            "age_seconds": 0.0,
+            "independent_turbidity_reference": false
+          },
+          {
+            "parameter": "Depth",
+            "units": "m",
+            "latest_value": 0.28,
+            "latest_timestamp": "2024-04-02T22:00:00Z",
+            "age_seconds": 0.0,
+            "independent_turbidity_reference": false
+          },
+          {
+            "parameter": "FDOM Fluorescence",
+            "units": "RFU",
+            "latest_value": 0.359,
+            "latest_timestamp": "2024-04-02T22:00:00Z",
+            "age_seconds": 0.0,
+            "independent_turbidity_reference": false
+          },
+          {
+            "parameter": "Specific Conductivity",
+            "units": "µS/cm",
+            "latest_value": 269.601,
+            "latest_timestamp": "2024-04-02T22:00:00Z",
+            "age_seconds": 0.0,
+            "independent_turbidity_reference": false
+          },
+          {
+            "parameter": "Temperature",
+            "units": "C",
+            "latest_value": 11.817,
+            "latest_timestamp": "2024-04-02T22:00:00Z",
+            "age_seconds": 0.0,
+            "independent_turbidity_reference": false
+          },
+          {
+            "parameter": "pH",
+            "units": "pH",
+            "latest_value": 9.096,
+            "latest_timestamp": "2024-04-02T22:00:00Z",
+            "age_seconds": 0.0,
+            "independent_turbidity_reference": false
+          }
+        ],
+        "independent_turbidity_measurement_available": false
+      }
+    }
+  ],
+  "checks_performed": [
+    "check_variation",
+    "check_freshness",
+    "check_device_status",
+    "check_maintenance_context",
+    "check_related_measurements"
+  ],
+  "tool_attempts": [
+    {
+      "tool": "check_variation",
+      "status": "performed",
+      "evidence_id": "R01",
+      "reason": null
+    },
+    {
+      "tool": "check_freshness",
+      "status": "performed",
+      "evidence_id": "R02",
+      "reason": null
+    },
+    {
+      "tool": "check_device_status",
+      "status": "performed",
+      "evidence_id": "R03",
+      "reason": null
+    },
+    {
+      "tool": "check_maintenance_context",
+      "status": "performed",
+      "evidence_id": "R04",
+      "reason": null
+    },
+    {
+      "tool": "check_related_measurements",
+      "status": "performed",
+      "evidence_id": "R05",
+      "reason": null
+    }
+  ],
+  "possible_causes": [
+    {
+      "cause": "sensor_artifact_possible",
+      "relevant_evidence_ids": [
+        "R01",
+        "R05"
+      ]
+    },
+    {
+      "cause": "river_change_possible",
+      "relevant_evidence_ids": [
+        "R01",
+        "R05"
+      ]
+    }
+  ],
+  "uncertainty": [
+    "The cause remains unresolved: no independent turbidity reference or live device fault log is supplied.",
+    "A recorded cleaning and a change in readings do not establish causation.",
+    "Sensor methods describe standard procedures, not proof of calibration at the replay time.",
+    "No physical confirmation test was performed by the agent.",
+    "Retrospective QC flags and corrected values were not read by the investigator.",
+    "Historical replay assumption: visit notes become available at the next UTC midnight. The source provides visit times, not the actual times when notes were entered."
+  ],
+  "suggested_operator_actions": [
+    {
+      "action": "Ask a qualified operator for a time-matched independent turbidity measurement using the site's approved procedure.",
+      "status": "requested_not_performed"
+    },
+    {
+      "action": "Request device fault records and review the original technician notes and readings around the visit.",
+      "status": "requested_not_performed"
+    }
+  ],
+  "boundaries": [
+    "Historical river observations do not validate a treatment-plant diagnosis.",
+    "No regulatory alarm threshold or simulated filter threshold is applied.",
+    "This report does not determine whether water is safe.",
+    "The agent cannot operate equipment, alter readings or clear alarms."
+  ]
+}

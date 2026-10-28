@@ -21,7 +21,8 @@ REPORTS = (
 FIXED_FILES = (
     "README.md", "JUDGE_GUIDE.md", "THIRD_PARTY.md", "LICENSE", "DESIGN.md",
     "requirements.txt", "requirements-tested.txt", "run_demo.py", "verify_setup.py",
-    "pyproject.toml", ".env.example", ".gitignore", "SUBMISSION_DRAFT.md",
+    "pyproject.toml", ".env.example", ".gitignore", "SUBMISSION_DRAFT.md", "RECORD_TODAY.md",
+    ".github/workflows/verify.yml", "demo_reports/README.md",
     "scripts/build_demo.py", "SUBMISSION_CHECKLIST.md", "DEMO_SCRIPT.md", "EVALUATION_PLAN.md",
     "data/river/udall-2024-04-01/observations.json",
     "data/river/udall-2024-04-01/context.json",
@@ -43,6 +44,16 @@ def release_files(root=ROOT):
     files.update(root / "water_diagnostics" / "web" / name for name in WEB_FILES)
     files.update(root / "reports" / (name + suffix) for name in REPORTS
                  for suffix in (".json", ".md"))
+    demo_stems = tuple(f"SIM-{i:03d}-000-nebius" for i in range(1, 7)) + (
+        "RIVER-udall-20240402T220000Z-nebius", "RIVER-udall-20240403T000000Z-nebius",
+        "RIVER-udall-20240412T000000Z-nebius")
+    files.update(root / "demo_reports" / (stem + suffix) for stem in demo_stems for suffix in (".json", ".md"))
+    qualification = root / "qualification/2026-10-28"
+    files.update(qualification / name for name in (
+        "README.md", "fresh-results.json", "browser-api-check.json", "fresh-install.json",
+        "history/phase-1.json", "history/phase-2.json", "history/phase-3.json",
+        "history/incomplete-RIVER-udall-20240402T220000Z-nebius.json",
+        "history/incomplete-RIVER-udall-20240402T220000Z-nebius.md"))
     for run in ("local-checks", "reviewed-checks"):
         folder = root / "evaluations/river-holdout-2024-04-08" / run
         files.update(folder / (stem + suffix)

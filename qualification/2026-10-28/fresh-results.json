@@ -1,0 +1,270 @@
+{
+  "authorized_max_usd": 10,
+  "session_guard_usd": 0.25,
+  "prior_phases_accounted_usd": 0.08590668,
+  "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+  "results": [
+    {
+      "source": "simulated",
+      "case": "normal",
+      "dataset": null,
+      "clock": null,
+      "fresh_inference": true,
+      "seconds": 6.84,
+      "score": {
+        "actual": "normal_behaviour",
+        "status": "complete",
+        "checks_performed": 5,
+        "audit_passed": true,
+        "expected_match": true,
+        "passed": true,
+        "issues": []
+      },
+      "usage": {
+        "requests": 6,
+        "requests_with_usage": 6,
+        "reported_cost_estimate_usd": 0.00059454,
+        "conservative_accounted_usd": 0.01269024
+      },
+      "reports": [
+        "SIM-001-000-nebius.json",
+        "SIM-001-000-nebius.md"
+      ]
+    },
+    {
+      "source": "simulated",
+      "case": "frozen",
+      "dataset": null,
+      "clock": null,
+      "fresh_inference": true,
+      "seconds": 7.144,
+      "score": {
+        "actual": "sensor_problem",
+        "status": "complete",
+        "checks_performed": 5,
+        "audit_passed": true,
+        "expected_match": true,
+        "passed": true,
+        "issues": []
+      },
+      "usage": {
+        "requests": 6,
+        "requests_with_usage": 6,
+        "reported_cost_estimate_usd": 0.0006078,
+        "conservative_accounted_usd": 0.01278204
+      },
+      "reports": [
+        "SIM-002-000-nebius.json",
+        "SIM-002-000-nebius.md"
+      ]
+    },
+    {
+      "source": "simulated",
+      "case": "communication_loss",
+      "dataset": null,
+      "clock": null,
+      "fresh_inference": true,
+      "seconds": 7.047,
+      "score": {
+        "actual": "communication_loss",
+        "status": "complete",
+        "checks_performed": 5,
+        "audit_passed": true,
+        "expected_match": true,
+        "passed": true,
+        "issues": []
+      },
+      "usage": {
+        "requests": 6,
+        "requests_with_usage": 6,
+        "reported_cost_estimate_usd": 0.0006255,
+        "conservative_accounted_usd": 0.01292784
+      },
+      "reports": [
+        "SIM-003-000-nebius.json",
+        "SIM-003-000-nebius.md"
+      ]
+    },
+    {
+      "source": "simulated",
+      "case": "maintenance",
+      "dataset": null,
+      "clock": null,
+      "fresh_inference": true,
+      "seconds": 7.903,
+      "score": {
+        "actual": "maintenance_disturbance",
+        "status": "complete",
+        "checks_performed": 5,
+        "audit_passed": true,
+        "expected_match": true,
+        "passed": true,
+        "issues": []
+      },
+      "usage": {
+        "requests": 6,
+        "requests_with_usage": 6,
+        "reported_cost_estimate_usd": 0.00060858,
+        "conservative_accounted_usd": 0.01275936
+      },
+      "reports": [
+        "SIM-004-000-nebius.json",
+        "SIM-004-000-nebius.md"
+      ]
+    },
+    {
+      "source": "simulated",
+      "case": "process_change",
+      "dataset": null,
+      "clock": null,
+      "fresh_inference": true,
+      "seconds": 8.033,
+      "score": {
+        "actual": "process_change",
+        "status": "complete",
+        "checks_performed": 5,
+        "audit_passed": true,
+        "expected_match": true,
+        "passed": true,
+        "issues": []
+      },
+      "usage": {
+        "requests": 6,
+        "requests_with_usage": 6,
+        "reported_cost_estimate_usd": 0.00060588,
+        "conservative_accounted_usd": 0.0127722
+      },
+      "reports": [
+        "SIM-005-000-nebius.json",
+        "SIM-005-000-nebius.md"
+      ]
+    },
+    {
+      "source": "simulated",
+      "case": "insufficient",
+      "dataset": null,
+      "clock": null,
+      "fresh_inference": true,
+      "seconds": 6.73,
+      "score": {
+        "actual": "insufficient_evidence",
+        "status": "complete",
+        "checks_performed": 5,
+        "audit_passed": true,
+        "expected_match": true,
+        "passed": true,
+        "issues": []
+      },
+      "usage": {
+        "requests": 6,
+        "requests_with_usage": 6,
+        "reported_cost_estimate_usd": 0.00059166,
+        "conservative_accounted_usd": 0.01267776
+      },
+      "reports": [
+        "SIM-006-000-nebius.json",
+        "SIM-006-000-nebius.md"
+      ]
+    },
+    {
+      "source": "river",
+      "case": "before_visit",
+      "dataset": "udall-2024-04-01",
+      "clock": "2024-04-02T22:00:00Z",
+      "fresh_inference": true,
+      "seconds": 7.313,
+      "score": {
+        "actual": "insufficient_evidence",
+        "status": "complete",
+        "checks_performed": 5,
+        "audit_passed": true,
+        "passed": true,
+        "issues": []
+      },
+      "usage": {
+        "requests": 6,
+        "requests_with_usage": 6,
+        "reported_cost_estimate_usd": 0.000645,
+        "conservative_accounted_usd": 0.01189284
+      },
+      "reports": [
+        "RIVER-udall-20240402T220000Z-nebius.json",
+        "RIVER-udall-20240402T220000Z-nebius.md"
+      ]
+    },
+    {
+      "source": "river",
+      "case": "after_visit",
+      "dataset": "udall-2024-04-01",
+      "clock": "2024-04-03T00:00:00Z",
+      "fresh_inference": true,
+      "seconds": 12.127,
+      "score": {
+        "actual": "insufficient_evidence",
+        "status": "complete",
+        "checks_performed": 5,
+        "audit_passed": true,
+        "passed": true,
+        "issues": []
+      },
+      "usage": {
+        "requests": 6,
+        "requests_with_usage": 6,
+        "reported_cost_estimate_usd": 0.00067602,
+        "conservative_accounted_usd": 0.01204428
+      },
+      "reports": [
+        "RIVER-udall-20240403T000000Z-nebius.json",
+        "RIVER-udall-20240403T000000Z-nebius.md"
+      ]
+    },
+    {
+      "source": "river",
+      "case": "holdout_gap",
+      "dataset": "udall-2024-04-08",
+      "clock": "2024-04-12T00:00:00Z",
+      "fresh_inference": true,
+      "seconds": 7.654,
+      "score": {
+        "actual": "insufficient_evidence",
+        "status": "complete",
+        "checks_performed": 5,
+        "audit_passed": true,
+        "passed": true,
+        "issues": []
+      },
+      "usage": {
+        "requests": 6,
+        "requests_with_usage": 6,
+        "reported_cost_estimate_usd": 0.00071598,
+        "conservative_accounted_usd": 0.01229364
+      },
+      "reports": [
+        "RIVER-udall-20240412T000000Z-nebius.json",
+        "RIVER-udall-20240412T000000Z-nebius.md"
+      ]
+    }
+  ],
+  "limitation": "Designed fixtures and selected river replays; guarded model-plus-Python workflow, not field accuracy.",
+  "request_mode": {
+    "chat_template_kwargs": {
+      "enable_thinking": false
+    },
+    "temperature": 0
+  },
+  "local_tests_passed": 159,
+  "cross_platform_run_url": "https://github.com/Sanidhya77/water-diagnostics/actions/runs/40639281872",
+  "cross_platform_scope": "The preceding setup commit passed offline tests/package checks on Windows, Ubuntu and macOS. Final current-code CI follows the next source push.",
+  "browser_test": {
+    "fresh_inference": true,
+    "seconds": 9.335,
+    "requests": 6
+  },
+  "qualification_cost": {
+    "requests": 102,
+    "reported_token_estimate_usd": 0.01547628,
+    "conservative_reservations_usd": 0.211689,
+    "authorized_max_usd": 10,
+    "billing_authority": "Nebius account console"
+  }
+}

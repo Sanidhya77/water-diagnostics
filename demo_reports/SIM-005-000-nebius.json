@@ -1,0 +1,200 @@
+{
+  "source": "SIMULATED",
+  "incident": {
+    "source": "SIMULATED",
+    "incident_id": "SIM-005-000",
+    "observed_at": "2026-10-14T09:30:00+00:00",
+    "sensor_id": "SIM-FILTER-01-TURBIDITY",
+    "alarm_description": "Simulated filter outlet turbidity / data-quality alarm",
+    "demonstration_alarm_threshold_ntu": 0.3
+  },
+  "investigation_mode": "nebius_model",
+  "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+  "investigation_status": "complete",
+  "conclusion": "process_change",
+  "observations": [
+    {
+      "evidence_id": "E01",
+      "tool": "check_freshness",
+      "source": "SIMULATED",
+      "data": {
+        "sample_count": 31,
+        "usable_sample_count": 31,
+        "latest_timestamp": "2026-10-14T09:30:00+00:00",
+        "latest_age_seconds": 0.0,
+        "latest_usable_age_seconds": 0.0,
+        "freshness_limit_seconds": 120,
+        "missing_intervals": 0,
+        "timestamps_out_of_order_or_duplicate": false,
+        "future_timestamps": false,
+        "latest_sample_quality_good": true,
+        "fresh": true
+      }
+    },
+    {
+      "evidence_id": "E02",
+      "tool": "check_variation",
+      "source": "SIMULATED",
+      "data": {
+        "unit": "NTU",
+        "window_minutes": 10,
+        "usable_recent_count": 11,
+        "baseline_mean_ntu": 0.1034,
+        "latest_ntu": 0.804,
+        "recent_min_ntu": 0.094,
+        "recent_max_ntu": 0.815,
+        "recent_stddev_ntu": 0.26718,
+        "recent_distinct_values": 11,
+        "trailing_identical_count": 1,
+        "trailing_identical_minutes": 0.0,
+        "recent_above_threshold_count": 9,
+        "latest_above_threshold": true,
+        "demonstration_threshold_ntu": 0.3
+      }
+    },
+    {
+      "evidence_id": "E03",
+      "tool": "check_device_status",
+      "source": "SIMULATED",
+      "data": {
+        "available": true,
+        "record_timestamp": "2026-10-14T09:30:00+00:00",
+        "record_age_seconds": 0.0,
+        "status_fresh": true,
+        "online": true,
+        "fault_codes": [],
+        "last_calibration_record": "2026-10-07T09:30:00+00:00",
+        "calibration_age_days": 7.0
+      }
+    },
+    {
+      "evidence_id": "E04",
+      "tool": "check_maintenance_context",
+      "source": "SIMULATED",
+      "data": {
+        "log_available": true,
+        "window_minutes": 30,
+        "events": [],
+        "elevated_samples_during_recorded_event": 0,
+        "physical_test_executed_by_agent": false
+      }
+    },
+    {
+      "evidence_id": "E05",
+      "tool": "check_related_measurements",
+      "source": "SIMULATED",
+      "data": {
+        "signals": [
+          {
+            "instrument_id": "SIM-OUTLET-REFERENCE",
+            "role": "independent_outlet_turbidity",
+            "unit": "NTU",
+            "fresh": true,
+            "latest_age_seconds": 0.0,
+            "latest_value": 0.742,
+            "baseline_mean": 0.1008,
+            "usable_recent_count": 11,
+            "recent_above_threshold_count": 9,
+            "latest_above_threshold": true,
+            "measurement_source": "simulated_recorded_online_instrument"
+          },
+          {
+            "instrument_id": "SIM-FILTER-DP",
+            "role": "filter_differential_pressure",
+            "unit": "bar",
+            "fresh": true,
+            "latest_age_seconds": 0.0,
+            "latest_value": 0.573,
+            "baseline_mean": 0.252,
+            "usable_recent_count": 11,
+            "recent_above_threshold_count": null,
+            "latest_above_threshold": null,
+            "measurement_source": "simulated_recorded_online_instrument"
+          }
+        ],
+        "physical_test_executed_by_agent": false
+      }
+    }
+  ],
+  "checks_performed": [
+    "check_freshness",
+    "check_variation",
+    "check_device_status",
+    "check_maintenance_context",
+    "check_related_measurements"
+  ],
+  "tool_attempts": [
+    {
+      "tool": "check_freshness",
+      "status": "performed",
+      "evidence_id": "E01",
+      "reason": null
+    },
+    {
+      "tool": "check_variation",
+      "status": "performed",
+      "evidence_id": "E02",
+      "reason": null
+    },
+    {
+      "tool": "check_device_status",
+      "status": "performed",
+      "evidence_id": "E03",
+      "reason": null
+    },
+    {
+      "tool": "check_maintenance_context",
+      "status": "performed",
+      "evidence_id": "E04",
+      "reason": null
+    },
+    {
+      "tool": "check_related_measurements",
+      "status": "performed",
+      "evidence_id": "E05",
+      "reason": null
+    }
+  ],
+  "possible_causes": [
+    {
+      "cause": "sensor_problem",
+      "supporting_evidence_ids": [
+        "E02"
+      ],
+      "conflicting_evidence_ids": [
+        "E05"
+      ],
+      "interpretation": "A sensor problem remains a possible explanation for the local signal. An elevated independent outlet reading conflicts with a sensor-only explanation."
+    },
+    {
+      "cause": "process_change",
+      "supporting_evidence_ids": [
+        "E02",
+        "E05"
+      ],
+      "conflicting_evidence_ids": [],
+      "interpretation": "An elevated local reading keeps a process change among the possible causes. A fresh independent outlet instrument also reports elevated turbidity. The underlying process cause is unconfirmed."
+    }
+  ],
+  "uncertainty": [
+    "All inputs are simulated; field accuracy is unknown.",
+    "No physical confirmation test was performed by the agent.",
+    "Corroborating elevated readings do not identify the underlying process fault."
+  ],
+  "suggested_operator_actions": [
+    {
+      "action": "Follow the site's existing alarm and escalation procedure.",
+      "status": "requested_not_performed"
+    },
+    {
+      "action": "Ask an operator to review filter performance and confirm the excursion with an independent outlet sample.",
+      "status": "requested_not_performed"
+    }
+  ],
+  "boundaries": [
+    "Existing plant alarms remain independent and immediate.",
+    "This agent cannot operate equipment, change treatment settings, or clear alarms.",
+    "This report does not determine whether water is safe.",
+    "Simulated results do not establish field accuracy or business savings."
+  ]
+}

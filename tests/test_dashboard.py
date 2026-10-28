@@ -115,6 +115,17 @@ def test_simulated_data_has_distinct_source_and_demonstration_threshold(interfac
     assert len(data["points"]) == 31
 
 
+def test_curated_demo_report_is_preferred_to_legacy_saved_copy(interface):
+    app, _, _, _ = interface
+    from water_diagnostics.river_investigator import investigate_river, save_river_report
+    original = investigate_river(app.river_directory, "2024-04-03T00:00:00Z")
+    save_river_report(original, app.root / "reports")
+    curated = original.model_copy(update={"uncertainty": ["Curated source copy"]})
+    save_river_report(curated, app.root / "demo_reports")
+    selected = app.cached_report(dashboard.selection({"mode": "offline"}))
+    assert selected.uncertainty == ["Curated source copy"]
+
+
 def test_replay_and_mode_validation_rejects_unsupported_inputs(interface):
     _, _, client, address = interface
     for payload in ({"source": "other"}, {"mode": "no-guard"}, {"case": "other"},

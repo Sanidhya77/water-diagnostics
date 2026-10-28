@@ -1,0 +1,14 @@
+{
+  "freshInference": true,
+  "seconds": 9.335,
+  "downloadVerified": true,
+  "requests": 6,
+  "tokenEstimateUsd": 0.00070074,
+  "conservativeUsd": 0.01214244,
+  "mobile": {
+    "viewport": 390,
+    "content": 390,
+    "panel": 358
+  },
+  "browserErrors": []
+}

@@ -1,0 +1,90 @@
+{
+  "authorized_max_usd": 10,
+  "session_guard_usd": 0.25,
+  "prior_phases_accounted_usd": 0.03797712,
+  "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+  "results": [
+    {
+      "source": "simulated",
+      "case": "normal",
+      "dataset": null,
+      "clock": null,
+      "fresh_inference": true,
+      "seconds": 242.545,
+      "score": {
+        "actual": "normal_behaviour",
+        "status": "complete",
+        "checks_performed": 5,
+        "audit_passed": true,
+        "expected_match": true,
+        "passed": true,
+        "issues": []
+      },
+      "usage": {
+        "requests": 6,
+        "requests_with_usage": 6,
+        "reported_cost_estimate_usd": 0.00126102,
+        "conservative_accounted_usd": 0.01260528
+      },
+      "reports": [
+        "SIM-001-000-nebius.json",
+        "SIM-001-000-nebius.md"
+      ]
+    },
+    {
+      "source": "simulated",
+      "case": "communication_loss",
+      "dataset": null,
+      "clock": null,
+      "fresh_inference": true,
+      "seconds": 97.949,
+      "score": {
+        "actual": "communication_loss",
+        "status": "complete",
+        "checks_performed": 5,
+        "audit_passed": true,
+        "expected_match": true,
+        "passed": true,
+        "issues": []
+      },
+      "usage": {
+        "requests": 6,
+        "requests_with_usage": 6,
+        "reported_cost_estimate_usd": 0.00146886,
+        "conservative_accounted_usd": 0.01284288
+      },
+      "reports": [
+        "SIM-003-000-nebius.json",
+        "SIM-003-000-nebius.md"
+      ]
+    },
+    {
+      "source": "simulated",
+      "case": "maintenance",
+      "dataset": null,
+      "clock": null,
+      "fresh_inference": true,
+      "seconds": 44.019,
+      "score": {
+        "actual": "maintenance_disturbance",
+        "status": "complete",
+        "checks_performed": 5,
+        "audit_passed": true,
+        "expected_match": true,
+        "passed": true,
+        "issues": []
+      },
+      "usage": {
+        "requests": 6,
+        "requests_with_usage": 6,
+        "reported_cost_estimate_usd": 0.00106914,
+        "conservative_accounted_usd": 0.0126744
+      },
+      "reports": [
+        "SIM-004-000-nebius.json",
+        "SIM-004-000-nebius.md"
+      ]
+    }
+  ],
+  "limitation": "Designed fixtures and selected river replays; guarded model-plus-Python workflow, not field accuracy."
+}

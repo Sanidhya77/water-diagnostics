@@ -35,7 +35,8 @@ class ToolCall(BaseModel):
 
 SYSTEM_PROMPT = """You investigate simulated filter outlet turbidity alarms for a human operator.
 Use the five approved read-only diagnostic tools. Python does all numerical checks.
-Select tools, read their results, then select the next check. All five checks must
+Select independent checks together in a single tool-call turn when possible.
+Read their results before selecting a conclusion. All five checks must
 be attempted successfully before a final report, even when records are unavailable.
 Never invent a tool result, a physical test, water-safety finding or equipment action.
 The replay clock and demonstration threshold are not real plant or regulatory limits.

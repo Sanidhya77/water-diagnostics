@@ -63,7 +63,7 @@ def find_saved(root, output, replay):
     # Each explicit CLI recovery appends -retry. Inspect the latest attempt,
     # including failures, rather than choosing whichever saved report passed.
     pattern = re.compile(re.escape(stem) + r"(?:-retry)*\.json")
-    paths = [path for folder in (output, root / "reports")
+    paths = [path for folder in (output, root / "demo_reports", root / "reports")
              for path in sorted((p for p in folder.glob(stem + "*.json")
                                  if pattern.fullmatch(p.name)),
                                 key=lambda p: len(p.name), reverse=True)]

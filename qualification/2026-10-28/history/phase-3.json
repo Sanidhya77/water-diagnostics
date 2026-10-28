@@ -1,0 +1,38 @@
+{
+  "authorized_max_usd": 10,
+  "session_guard_usd": 0.25,
+  "prior_phases_accounted_usd": 0.0505824,
+  "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+  "results": [
+    {
+      "source": "river",
+      "case": "before_visit",
+      "dataset": "udall-2024-04-01",
+      "clock": "2024-04-02T22:00:00Z",
+      "fresh_inference": true,
+      "seconds": 61.592,
+      "score": {
+        "actual": "insufficient_evidence",
+        "status": "incomplete",
+        "checks_performed": 4,
+        "audit_passed": false,
+        "passed": false,
+        "issues": [
+          "Incomplete investigation",
+          "Five unique checks required"
+        ]
+      },
+      "usage": {
+        "requests": 5,
+        "requests_with_usage": 5,
+        "reported_cost_estimate_usd": 0.00139596,
+        "conservative_accounted_usd": 0.009807
+      },
+      "reports": [
+        "RIVER-udall-20240402T220000Z-nebius.json",
+        "RIVER-udall-20240402T220000Z-nebius.md"
+      ]
+    }
+  ],
+  "limitation": "Designed fixtures and selected river replays; guarded model-plus-Python workflow, not field accuracy."
+}

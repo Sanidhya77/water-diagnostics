@@ -1,6 +1,6 @@
 # Submission preparation
 
-Checked October 22, 2026 against the [official hackathon rules](https://nebiusglobalaihackathon.devpost.com/rules).
+Checked October 28, 2026 against the [official hackathon rules](https://nebiusglobalaihackathon.devpost.com/rules).
 
 The deadline is October 30, 2026 at 10 a.m. PDT (10:30 p.m. India time). The
 current project fits the Best Apps and Agents track; that
@@ -10,7 +10,7 @@ is our project-fit judgment, not an eligibility guarantee.
 
 - Hosted NVIDIA Nemotron through Nebius Token Factory, with five approved checks.
 - Separate simulated incidents and historical river replay.
-- Three saved synthetic workflow cases pass; the current suite has 155 passing
+- Three saved synthetic workflow cases pass; the current suite has 159 passing
   local tests, including recovery gates and verification. The samples are
   development checks, not field accuracy.
 - Saved reports, evidence citations and operator requests in the local dashboard.
@@ -23,6 +23,13 @@ is our project-fit judgment, not an eligibility guarantee.
   dashboard/budget tests pass after this UI change.
 
 ## Runnable judge package
+
+- [x] Add `run_demo.py` for setup/startup and `--check` for free saved validation.
+- [x] Complete nine fresh hosted investigations and a separate fresh browser API
+  test after fixing the river output-limit failure. Preserve the failed attempt.
+  See `qualification/2026-10-28/README.md` and `RECORD_TODAY.md`.
+- [x] Verify a fresh Windows dependency installation. Offline CI also runs on
+  Windows, Ubuntu and macOS; exact current results are on the workflow page.
 
 - [x] Prepare an allowlisted build script: `python scripts/build_demo.py`.
   `JUDGE_GUIDE.md` gives setup and the free walkthrough.

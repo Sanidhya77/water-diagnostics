@@ -209,7 +209,7 @@ def verify(before: Readback, after: Readback, action_at: datetime) -> Verificati
 def load_investigation(replay: Replay, root: Path, explicit: Path | None = None):
     pattern = re.compile(re.escape(replay.incident_id + "-nebius") + r"(?:-retry)*\.json")
     paths = ([explicit] if explicit is not None else [
-        path for directory in (root / "reports" / "demo-validation", root / "reports")
+        path for directory in (root / "reports" / "demo-validation", root / "demo_reports", root / "reports")
         for path in sorted((p for p in directory.glob(replay.incident_id + "-nebius*.json")
                             if pattern.fullmatch(p.name)), key=lambda p: len(p.name), reverse=True)])
     if paths:

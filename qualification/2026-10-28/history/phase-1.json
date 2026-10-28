@@ -1,0 +1,81 @@
+{
+  "authorized_max_usd": 10,
+  "initial_session_guard_usd": 0.25,
+  "original_project_guard_usd": 5,
+  "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+  "results": [
+    {
+      "case": "frozen",
+      "fresh_inference": true,
+      "seconds": 68.548,
+      "score": {
+        "actual": "sensor_problem",
+        "status": "complete",
+        "checks_performed": 5,
+        "audit_passed": true,
+        "expected_match": true,
+        "passed": true,
+        "issues": []
+      },
+      "usage": {
+        "requests": 6,
+        "requests_with_usage": 6,
+        "reported_cost_estimate_usd": 0.0016854,
+        "conservative_accounted_usd": 0.01269708
+      },
+      "reports": [
+        "SIM-002-000-nebius.json",
+        "SIM-002-000-nebius.md"
+      ]
+    },
+    {
+      "case": "process_change",
+      "fresh_inference": true,
+      "seconds": 38.843,
+      "score": {
+        "actual": "process_change",
+        "status": "complete",
+        "checks_performed": 5,
+        "audit_passed": true,
+        "expected_match": true,
+        "passed": true,
+        "issues": []
+      },
+      "usage": {
+        "requests": 6,
+        "requests_with_usage": 6,
+        "reported_cost_estimate_usd": 0.00113868,
+        "conservative_accounted_usd": 0.01268724
+      },
+      "reports": [
+        "SIM-005-000-nebius.json",
+        "SIM-005-000-nebius.md"
+      ]
+    },
+    {
+      "case": "insufficient",
+      "fresh_inference": true,
+      "seconds": 34.958,
+      "score": {
+        "actual": "insufficient_evidence",
+        "status": "complete",
+        "checks_performed": 5,
+        "audit_passed": true,
+        "expected_match": true,
+        "passed": true,
+        "issues": []
+      },
+      "usage": {
+        "requests": 6,
+        "requests_with_usage": 6,
+        "reported_cost_estimate_usd": 0.0010659,
+        "conservative_accounted_usd": 0.0125928
+      },
+      "reports": [
+        "SIM-006-000-nebius.json",
+        "SIM-006-000-nebius.md"
+      ]
+    }
+  ],
+  "limitation": "Designed synthetic fixtures, not field accuracy; Python constrains the model-plus-tool workflow."
+}

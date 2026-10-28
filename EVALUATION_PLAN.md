@@ -30,8 +30,12 @@ performed. All reports remain inconclusive. This is additional workflow
 evidence, not a model-accuracy result. The selection, both local runs and full
 reports are in [the evaluation record](evaluations/river-holdout-2024-04-08/README.md).
 
-The steps below describe the selection procedure used and the later hosted
-review that remains pending:
+On October 28, a fresh hosted investigation of the gap-containing April 12 clock
+completed all five checks and passed the source-evidence audit. It stayed
+inconclusive. This is one selected hosted replay, not field accuracy. See
+[release qualification](qualification/2026-10-28/README.md).
+
+The steps below describe the selection procedure used and future expansion:
 
 Select one additional site or nonoverlapping week from the already downloaded,
 pinned CSU ROSS / Poudre Water Quality Network archives. No new dataset purchase

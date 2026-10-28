@@ -1,6 +1,6 @@
 # Water Diagnostics — submission draft
 
-Prepared October 22, 2026. This is reviewable copy, not a submitted Devpost entry.
+Updated October 28, 2026. This is reviewable copy, not a submitted Devpost entry.
 The video URL and the arrangement for free judge access to fresh hosted inference
 are still pending. Review the text against the final recorded demonstration.
 
@@ -98,16 +98,18 @@ independently verified packet delivery.
 
 ## What we can demonstrate
 
-- 155 passing local tests, including causal visibility, budget controls, report
+- 159 passing local tests, including causal visibility, budget controls, report
   validation and blocked unexpected reads/network calls in the extra-week check.
-- Three saved hosted synthetic fixtures with matching expected workflow outcomes:
-  sensor fault, corroborating process change and insufficient evidence. These are
-  designed examples of the guarded model-plus-Python workflow, not independent
-  model accuracy. The saved runs span earlier reporting protocols.
+- Nine fresh qualification investigations under the current request settings:
+  six synthetic fixtures with matching designed outcomes, and three inconclusive
+  river replays. All completed the five checks and passed evidence audits. These
+  are selected examples of the guarded model-plus-Python workflow, not independent
+  model accuracy. A separate real browser API run completed and downloaded its report.
 - Two real-data weeks. The additional April 8–14 subset contains 672 turbidity
   time slots, including 162 missing entries. Three fixed local replays passed
   workflow-integrity checks while preserving missing values and uncertainty.
-  That evaluation made no fresh hosted-model calls.
+  That original local evaluation made no hosted calls; the later qualification
+  also investigated its gap-containing clock through the real Nebius API.
 - Two recovery simulations: verified new packets or recorded escalation.
 - A reproducible public source build with attributed data and evidence-linked
   downloadable reports.
@@ -145,7 +147,7 @@ workflow. Local token estimates and reservations are kept separate from
 authoritative Nebius billing.
 
 The project used NVIDIA Nemotron for inference. It did not evaluate NVIDIA
-training tooling, AI Cloud compute or Raspberry Pi inference. The three designed
+training tooling, AI Cloud compute or Raspberry Pi inference. The selected
 hosted fixtures do not support general claims about model reliability or speed.
 
 Tavily has a functional explicit runtime lookup with a separate credit guard and
@@ -169,7 +171,7 @@ Review this feedback against your own experience before submitting it as yours.
 - [ ] Check the final form's track, links, authorship and required tool feedback.
 - [ ] Review the entry and submit it on Devpost before the deadline.
 
-Official requirements checked October 22:
+Official requirements checked October 28:
 https://nebiusglobalaihackathon.devpost.com/rules
 Deadline: October 30, 2026, 10 a.m. PDT / 10:30 p.m. India time. Public code with
 an open-source license, a demo/test-build link, a public video under three minutes

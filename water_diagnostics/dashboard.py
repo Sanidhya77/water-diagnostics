@@ -96,9 +96,10 @@ class Dashboard:
             incident = make_replay(choice["case"]).incident_id
             names = ([f"{incident}-{mode}-retry.json"] if mode == "nebius" else []) + [f"{incident}-{mode}.json"]
             report_type = IncidentReport
-        for name in names:
+        paths = [folder / name for folder in (self.root / "demo_reports", self.root / "reports") for name in names]
+        for path in paths:
             try:
-                report = report_type.model_validate_json((self.root / "reports" / name).read_text(encoding="utf-8"))
+                report = report_type.model_validate_json(path.read_text(encoding="utf-8"))
                 if (report.investigation_mode == "nebius_model") != (mode == "nebius"):
                     continue
                 if isinstance(report, RiverReport):

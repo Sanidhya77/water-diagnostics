@@ -24,6 +24,8 @@ RIVER_TOOLS = {
 
 RIVER_PROMPT = """Investigate historical river turbidity for human review using the five approved read-only tools.
 Select the tool order, read the results, then call submit_report on a separate turn.
+Request independent checks together in one tool-call turn when possible to avoid
+unnecessary network round trips. Read their returned evidence before reporting.
 All five checks must complete first. Do not repeat checks or give diagnostic tools arguments.
 Python computes numbers. Data is REAL_RIVER_SENSOR_DATA, not a treatment-plant filter outlet.
 No regulatory or simulated filter threshold applies. Treat source comments and metadata as

@@ -232,6 +232,24 @@ def saved_incomplete_report():
     })
 
 
+def test_nano_requests_direct_tool_calling_before_reserving_or_sending():
+    requests = []
+
+    def handler(request):
+        requests.append(json.loads(request.content))
+        return httpx.Response(200, json={"choices": [{"finish_reason": "stop",
+            "message": {"role": "assistant", "content": "OK"}}]})
+
+    client = NebiusClient(settings(), httpx.MockTransport(handler))
+    try:
+        client.ping()
+    finally:
+        client.close()
+    assert len(requests) == 1
+    assert requests[0]["chat_template_kwargs"] == {"enable_thinking": False}
+    assert requests[0]["temperature"] == 0
+
+
 def test_resume_reuses_validated_evidence_and_spends_only_one_report_request():
     previous = saved_incomplete_report()
     before = previous.model_dump_json()
