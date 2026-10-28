@@ -46,9 +46,10 @@ the incomplete and successful attempts remain documented.
   constraints, batched tool responses, report lookup and source isolation.
 - A fresh Windows environment installed the tested dependencies from scratch and
   passed `run_demo.py --check` without credentials or the original environment.
-- Offline CI installed and tested the preceding setup snapshot on Windows,
-  Ubuntu and macOS. The workflow also runs on each current source push:
-  https://github.com/Sanidhya77/water-diagnostics/actions/workflows/verify.yml
+- Current runtime commit `a5bb6a3cd01460ddd30cc129f337c9aedeef1a8e` passed
+  all 159 tests, saved audits, extra-week checks and package creation on Windows,
+  Ubuntu and macOS:
+  https://github.com/Sanidhya77/water-diagnostics/actions/runs/40640796347
 - A separate browser test clicked Run with Nemotron, completed a fresh river
   investigation, opened/downloaded the report and checked four viewport widths,
   playback, reduced motion and both simulated recovery outcomes. It completed

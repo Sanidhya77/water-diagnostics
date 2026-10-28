@@ -253,8 +253,8 @@
     "temperature": 0
   },
   "local_tests_passed": 159,
-  "cross_platform_run_url": "https://github.com/Sanidhya77/water-diagnostics/actions/runs/40639281872",
-  "cross_platform_scope": "The preceding setup commit passed offline tests/package checks on Windows, Ubuntu and macOS. Final current-code CI follows the next source push.",
+  "cross_platform_run_url": "https://github.com/Sanidhya77/water-diagnostics/actions/runs/40640796347",
+  "cross_platform_scope": "Release runtime commit a5bb6a3cd01460ddd30cc129f337c9aedeef1a8e passed 159 tests, saved audits, extra-week checks and package creation on Windows, Ubuntu and macOS. The following commit changes documentation/qualification metadata only.",
   "browser_test": {
     "fresh_inference": true,
     "seconds": 9.335,
@@ -266,5 +266,6 @@
     "conservative_reservations_usd": 0.211689,
     "authorized_max_usd": 10,
     "billing_authority": "Nebius account console"
-  }
+  },
+  "cross_platform_runtime_commit": "a5bb6a3cd01460ddd30cc129f337c9aedeef1a8e"
 }
