@@ -25,6 +25,19 @@ class BudgetError(RuntimeError):
     pass
 
 
+def reservation_units(model: str, payload: dict) -> int:
+    """Conservative Nano reservation in integer 1e-8 USD units."""
+    if model != DEFAULT_MODEL:
+        raise BudgetError("Cost guard pricing is verified only for the configured Nano model; no request sent.")
+    output = payload.get("max_tokens")
+    size = len(json.dumps(payload, ensure_ascii=False).encode("utf-8"))
+    if type(output) is not int or not 1 <= output <= 4096 or size > 60000:
+        raise BudgetError("Request exceeds the small-test input/output limit; no request sent.")
+    # $0.06 / million input and $0.24 / million output = 6 and 24
+    # integer units per token. Keep the 2x framing/output margin.
+    return 2 * ((size + 2048) * 6 + output * 24)
+
+
 class CostGuard:
     def __init__(self, path: Path | None = None, project_cap: float = PROJECT_CAP_USD,
                  run_cap: float = RUN_CAP_USD):
@@ -72,14 +85,7 @@ class CostGuard:
             raise BudgetError("Could not save the local budget ledger; no further request should be sent.") from None
 
     def reserve(self, model: str, payload: dict) -> str:
-        if model != DEFAULT_MODEL:
-            raise BudgetError("Cost guard pricing is verified only for the configured Nano model; no request sent.")
-        output = payload.get("max_tokens")
-        size = len(json.dumps(payload, ensure_ascii=False).encode("utf-8"))
-        if not isinstance(output, int) or not 1 <= output <= 4096 or size > 60000:
-            raise BudgetError("Request exceeds the small-test input/output limit; no request sent.")
-        reservation = round(2 * ((size + 2048) * INPUT_USD_PER_MILLION
-                                + output * OUTPUT_USD_PER_MILLION) / 1_000_000, 8)
+        reservation = reservation_units(model, payload) / 100_000_000
         with self._locked():
             state = self._read()
             total = sum(r["accounted_usd"] for r in state["requests"])

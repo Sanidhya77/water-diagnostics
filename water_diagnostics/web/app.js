@@ -13,7 +13,7 @@ const causeNames = {
   communication_loss: "Possible communication loss", maintenance_disturbance: "Maintenance disturbance",
   normal_behaviour: "Current readings within the demo limits", insufficient_evidence: "Unresolved origin"
 };
-const state = {source: "river", case: "frozen", dataset: "udall-2024-04-01", publicDemo: false, at: "2024-04-03T00:00:00Z", busy: false,
+const state = {source: "river", case: "frozen", dataset: "udall-2024-04-01", publicDemo: false, liveInference: false, keyBusy: false, at: "2024-04-03T00:00:00Z", busy: false,
   loading: false, guidanceBusy: false, recoveryBusy: false, chartHours: 6, generation: 0, replay: null, report: null,
   displayMode: null, signal: null, playback: null, completedTools: new Set(), evidence: new Map(), selectedTool: null};
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -44,9 +44,11 @@ function message(text, error = false) {
   $("message").className = "message" + (error ? " error" : "");
 }
 function lockControls() {
-  const disabled = state.busy || state.loading || state.guidanceBusy || state.recoveryBusy;
+  const disabled = state.busy || state.loading || state.guidanceBusy || state.recoveryBusy || state.keyBusy;
   for (const id of ["run-local", "river-tab", "simulation-tab", "before-visit", "after-visit", "update-replay", "replay-clock", "scenario", "river-period"]) $(id).disabled = disabled;
-  $("run-ai").disabled = disabled || state.publicDemo;
+  $("run-ai").disabled = disabled || !state.liveInference || state.keyBusy;
+  $("connect-key").disabled = disabled || state.keyBusy;
+  $("disconnect-key").disabled = state.keyBusy;
   $("lookup-guidance").disabled = disabled || state.publicDemo;
   $("run-recovery").disabled = disabled;
   $("recovery-case").disabled = disabled;
@@ -376,9 +378,11 @@ async function loadReplay() {
     if (generation !== state.generation) return;
     state.replay = data;
     state.publicDemo = Boolean(data.capabilities?.public_demo);
+    state.liveInference = Boolean(data.capabilities?.live_inference);
     document.body.classList.toggle("public-demo", state.publicDemo);
     $("deployment-note").hidden = !state.publicDemo;
-    $("ai-run-note").textContent = state.publicDemo ? "Fresh API calls: use the local build" : "Uses credits · $0.02 guard";
+    $("visitor-connection").hidden = !data.visitor_keys;
+    $("ai-run-note").textContent = state.publicDemo ? (state.liveInference ? "Your key · $0.02 run guard" : "Connect your key above for a fresh run") : "Uses credits · $0.02 guard";
     $("run-local").classList.toggle("primary", state.publicDemo);
     $("run-local").classList.toggle("secondary", !state.publicDemo);
     $("run-ai").classList.toggle("primary", !state.publicDemo);
@@ -426,7 +430,7 @@ async function runInvestigation(mode) {
       await new Promise((resolve) => setTimeout(resolve, 900));
     }
   } catch (error) { message(error.message, true); $("run-status").textContent = "Investigation could not finish"; }
-  finally { state.busy = false; lockControls(); }
+  finally { state.busy = false; lockControls(); refreshKeyStatus(); }
 }
 
 function sourceTab(source) {
@@ -564,4 +568,50 @@ for (const link of document.querySelectorAll(".app-nav a")) link.addEventListene
   }
 });
 window.addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { if (state.replay) drawChart(state.replay); }, 120); });
-renderTrace(); loadReplay();
+async function refreshKeyStatus() {
+  if (!state.publicDemo) return;
+  try {
+    const session = await request("/api/key-session");
+    const wasConnected = state.liveInference;
+    state.liveInference = session.connected;
+    $("key-summary").textContent = session.connected ? "Connected · temporary" : "Not connected";
+    $("disconnect-key").hidden = !session.connected;
+    $("key-form").hidden = session.connected;
+    $("key-status").textContent = session.connected
+      ? `${session.budget.requests_with_usage ? "Provider usage received." : "Key connected; run Nemotron to verify it."} ${Math.ceil(session.expires_in_seconds / 60)} min left · $${session.budget.conservative_accounted_usd.toFixed(4)} / $0.25 reserved.`
+      : "No key connected. Saved reports and local checks work without one.";
+    $("ai-run-note").textContent = session.connected ? "Your key · $0.02 run guard" : session.available ? "Connect your key above for a fresh run" : "Fresh API calls: use the local build";
+    if (wasConnected && !session.connected) $("key-status").textContent = "Connection ended. Reconnect your key for fresh inference; free checks still work.";
+    lockControls();
+  } catch (error) {
+    state.liveInference = false;
+    $("key-status").textContent = "Cannot check the connection. Retry when the demo is available; no new run has started.";
+    lockControls();
+  }
+}
+$("key-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (state.keyBusy || state.busy || state.loading) return;
+  state.keyBusy = true; lockControls();
+  $("key-status").textContent = "Connecting a temporary key…";
+  try {
+    await request("/api/key-session", {method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({nebius_api_key:$("visitor-key").value.trim()})});
+    $("visitor-key").value = "";
+    if (!state.busy) await loadReplay();
+    await refreshKeyStatus();
+  } catch (error) { $("visitor-key").value = ""; $("key-status").textContent = error.message; }
+  finally { state.keyBusy = false; lockControls(); }
+});
+$("disconnect-key").addEventListener("click", async () => {
+  if (state.keyBusy) return;
+  state.keyBusy = true; lockControls();
+  try {
+    await request("/api/key-disconnect", {method:"POST", headers:{"Content-Type":"application/json"}, body:"{}"});
+    if (!state.busy) await loadReplay();
+    await refreshKeyStatus();
+  } catch (error) { $("key-status").textContent = "Could not confirm removal. Retry Disconnect or revoke this dedicated key in Nebius."; }
+  finally { state.keyBusy = false; lockControls(); }
+});
+setInterval(() => { if (!document.hidden && !state.keyBusy) refreshKeyStatus(); }, 30_000);
+renderTrace(); loadReplay().then(refreshKeyStatus);

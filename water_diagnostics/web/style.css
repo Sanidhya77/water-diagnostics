@@ -81,7 +81,18 @@
   .button.primary:hover {background:var(--green-hover)}
   .button:disabled {cursor:default}
   .button:enabled:active {box-shadow:var(--well-shadow)}
-  .public-demo #run-ai {opacity:1;color:var(--muted);background:var(--canvas);border-color:var(--line);box-shadow:none}
+  .public-demo #run-ai:disabled {opacity:1;color:var(--muted);background:var(--canvas);border-color:var(--line);box-shadow:none}
+  .visitor-connection {margin:0 0 24px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--text)}
+  .visitor-connection>summary {padding:14px 0;color:var(--green);font-weight:600;font-size:.875rem}
+  .visitor-connection>summary span {display:inline-block;margin-left:12px;color:var(--muted);font-size:.8125rem;font-weight:400}
+  .key-connection-body {max-width:74ch;padding:0 0 18px;font-size:.875rem;line-height:1.6}
+  .key-connection-body a {color:var(--green);text-decoration:underline;text-underline-offset:3px}
+  #key-form {display:flex;align-items:end;flex-wrap:wrap;gap:12px;margin:16px 0}
+  #key-form label {flex:1;min-width:180px;font-size:.875rem;font-weight:600}
+  #visitor-key {width:100%;max-width:none;min-height:44px;margin-top:6px;font-size:1rem}
+  .key-terms {margin-top:12px;font-size:.8125rem;color:var(--muted)}
+  .key-session-controls {display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:16px}
+  .key-session-controls p {flex:1;min-width:180px}
   .button.secondary:hover,.button.small:hover {background:var(--green-light);border-color:#b8cbb9}
   .button:active {filter:brightness(.96);box-shadow:var(--well-shadow)}
   .brief-outcome h2 {font-size:1.5rem;line-height:1.3;letter-spacing:-.02em;color:var(--ink);font-weight:600;text-wrap:balance}

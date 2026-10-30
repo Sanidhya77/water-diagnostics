@@ -77,7 +77,7 @@ class NebiusClient:
         except (ValueError, KeyError, IndexError, TypeError):
             raise ModelClientError("Nebius returned an unexpected response format.") from None
         except BudgetError:
-            raise ModelClientError("The response arrived but usage could not be saved; inspect the local budget ledger before another request.") from None
+            raise ModelClientError("The response arrived but usage could not be recorded; review the applicable spending guard before another request.") from None
 
     def ping(self) -> None:
         """One short request; do not print the returned model text."""

@@ -8,7 +8,10 @@ checks and enforces evidence citations, report constraints and spending limits.
 **Open the [public replay demo](https://water-diagnostics-demo.onrender.com)**
 for saved results, fresh free local checks and recovery simulations. No account
 is required. The Free service may need about a minute to wake after inactivity.
-Fresh paid inference is available in the local build described below.
+Fresh paid inference is optional: connect your own Nebius key on the HTTPS demo,
+or use the local build described below. Saved/free checks need no key. Visitors
+pay for their own calls; the public connection expires after 30 minutes and has
+a Disconnect control. No shared entrant-funded allowance is configured.
 
 ## Start on Windows
 
@@ -97,6 +100,6 @@ does not read retrospective QC answers. Raspberry Pi collection is future work;
 physical repair, treatment control and nuclear qualification are not implemented.
 
 See `THIRD_PARTY.md` for the distributed public-data attribution and font license.
-For a Free Render demonstration with paid APIs blocked, see `HOSTING.md`.
+For the Free Render demonstration and temporary visitor-key policy, see `HOSTING.md`.
 For the documented need and a ten-minute operator review, see
 `USEFULNESS_AND_PILOT.md`. A hosted demonstration is not field validation.

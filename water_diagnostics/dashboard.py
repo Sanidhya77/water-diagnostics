@@ -3,6 +3,7 @@
 import json
 from datetime import datetime, timedelta, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from http.cookies import SimpleCookie, CookieError
 from pathlib import Path
 from threading import Lock, Thread
 from urllib.parse import parse_qs, urlsplit
@@ -20,6 +21,7 @@ from water_diagnostics.river_investigator import (
     CAUSE_WORDING, RiverReport, investigate_river, render_river_report, save_river_report,
 )
 from water_diagnostics.simulator import CASE_NAMES, make_replay
+from water_diagnostics.visitor_keys import COOKIE_NAME, SESSION_SECONDS, VisitorSessions
 from water_diagnostics.recovery import CASES as RECOVERY_CASES, RecoveryError, render_recovery, run_recovery_demo, save_recovery
 
 
@@ -75,6 +77,8 @@ class Dashboard:
     def __init__(self, root: Path = PROJECT_ROOT, public_demo: bool = False):
         self.root = root
         self.public_demo = public_demo
+        self.allow_visitor_keys = False  # Enabled only with a configured HTTPS public origin.
+        self.visitors = VisitorSessions()
         self.river_directory = root / "data" / "river" / "udall-2024-04-01"
         self.lock = Lock()
         self.jobs: dict[str, dict] = {}
@@ -91,8 +95,10 @@ class Dashboard:
     def river_directory_for(self, choice):
         return self.river_directory if choice["dataset"] == "udall-2024-04-01" else self.root / "data/river/udall-2024-04-08"
 
-    def budget(self) -> dict:
+    def budget(self, visitor=None) -> dict:
         if self.public_demo:
+            if visitor is not None and visitor.valid():
+                return visitor.summary()
             return {"project_cap_usd": 0, "per_run_cap_usd": 0, "requests": 0,
                     "reported_cost_estimate_usd": 0, "conservative_accounted_usd": 0,
                     "limitation": "Paid provider requests are disabled in this public demonstration."}
@@ -128,7 +134,7 @@ class Dashboard:
                 continue
         return None
 
-    def replay(self, choice: dict) -> dict:
+    def replay(self, choice: dict, visitor=None) -> dict:
         if choice["source"] == "river":
             river_directory = self.river_directory_for(choice)
             snapshot = river_snapshot(river_directory, choice["at"])
@@ -173,11 +179,14 @@ class Dashboard:
             "guidance": guidance,
             "saved_mode": saved_choice["mode"] if saved else None,
             "cases": CASE_LABELS, "river_replays": RIVER_REPLAYS,
-            "capabilities": {"public_demo": self.public_demo, "live_inference": not self.public_demo, "reference_lookup": not self.public_demo}}
+            "capabilities": {"public_demo": self.public_demo,
+                "live_inference": not self.public_demo or bool(visitor and visitor.valid()),
+                "reference_lookup": not self.public_demo},
+            "visitor_keys": self.allow_visitor_keys}
 
-    def start(self, choice: dict) -> str:
-        if self.public_demo and choice["mode"] == "nebius":
-            raise ValueError("This public demo uses saved hosted results and free local checks. Fresh inference is available in the downloaded local build.")
+    def start(self, choice: dict, visitor=None) -> str:
+        if self.public_demo and choice["mode"] == "nebius" and not (self.allow_visitor_keys and visitor and visitor.valid()):
+            raise ValueError("Connect your own Nebius key for temporary fresh inference, or use saved results and free local checks.")
         # Validate the replay before starting a thread or creating a paid client.
         self.replay(choice)
         with self.lock:
@@ -189,14 +198,20 @@ class Dashboard:
             self.active = identifier
             while len(self.jobs) > 12:
                 self.jobs.pop(next(iter(self.jobs)))
-        Thread(target=self._run, args=(identifier, choice), daemon=True, name="water-investigation").start()
+        args = (identifier, choice, visitor) if visitor is not None else (identifier, choice)
+        Thread(target=self._run, args=args, daemon=True, name="water-investigation").start()
         return identifier
 
-    def _run(self, identifier: str, choice: dict) -> None:
+    def _run(self, identifier: str, choice: dict, visitor=None) -> None:
         client = None
         try:
             if choice["mode"] == "nebius":
-                client = NebiusClient(load_settings(), budget=CostGuard(self.root / "reports" / "nebius-usage.json"))
+                if self.public_demo:
+                    if not (self.allow_visitor_keys and visitor and visitor.valid()):
+                        raise BudgetError("Your temporary key connection expired. Reconnect to run Nemotron.")
+                    client = NebiusClient(visitor.settings, budget=visitor.guard())
+                else:
+                    client = NebiusClient(load_settings(), budget=CostGuard(self.root / "reports" / "nebius-usage.json"))
 
             def progress(message):
                 with self.lock:
@@ -263,7 +278,7 @@ def make_server(port: int = 8765, app: Dashboard | None = None, *,
                 bind_address: str = "127.0.0.1", public_origin: str | None = None) -> ThreadingHTTPServer:
     app = app or Dashboard()
     if bind_address not in ("127.0.0.1", "0.0.0.0") or (bind_address == "0.0.0.0" and not app.public_demo):
-        raise ValueError("External binding is supported only for the public demo with paid calls disabled.")
+        raise ValueError("External binding is supported only for the public demo with owner-funded paid calls disabled.")
     public_host = None
     if public_origin:
         origin = urlsplit(public_origin)
@@ -273,18 +288,22 @@ def make_server(port: int = 8765, app: Dashboard | None = None, *,
             raise ValueError("Configure the public demo with one plain HTTPS origin.")
         public_origin = public_origin.rstrip("/")
         public_host = origin.netloc
+    app.allow_visitor_keys = bool(app.public_demo and public_origin)
 
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *args):
             pass  # No URLs, browser input, model bodies or credentials in logs.
 
-        def reply(self, status: int, body, content_type="application/json; charset=utf-8", download=False):
+        def reply(self, status: int, body, content_type="application/json; charset=utf-8", download=False, cookie=None):
             data = json.dumps(body, ensure_ascii=False, allow_nan=False).encode("utf-8") if isinstance(body, dict) else body
             self.send_response(status)
             self.send_header("Content-Type", content_type)
             self.send_header("Content-Length", str(len(data)))
             self.send_header("Cache-Control", "no-store")
             self.send_header("X-Content-Type-Options", "nosniff")
+            self.send_header("Referrer-Policy", "no-referrer")
+            if cookie:
+                self.send_header("Set-Cookie", cookie)
             self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'none'")
             if download:
                 self.send_header("Content-Disposition", 'attachment; filename="water-investigation.md"')
@@ -298,6 +317,22 @@ def make_server(port: int = 8765, app: Dashboard | None = None, *,
 
         def expected_origin(self):
             return public_origin if public_host and self.headers.get("Host") == public_host else "http://" + self.headers.get("Host", "")
+
+        def visitor_token(self):
+            try:
+                cookies = SimpleCookie(self.headers.get("Cookie", ""))
+                return cookies[COOKIE_NAME].value if COOKIE_NAME in cookies else None
+            except CookieError:
+                return None
+
+        def visitor(self):
+            return app.visitors.get(self.visitor_token()) if app.allow_visitor_keys else None
+
+        def visitor_status(self):
+            visitor = self.visitor()
+            return {"available": app.allow_visitor_keys, "connected": visitor is not None,
+                    "expires_in_seconds": max(0, int(visitor.expires - app.visitors.clock())) if visitor else 0,
+                    "budget": visitor.summary() if visitor else None}
 
         def do_GET(self):
             if not self.valid_host():
@@ -322,9 +357,11 @@ def make_server(port: int = 8765, app: Dashboard | None = None, *,
                     name, content_type = files[url.path]
                     self.reply(200, (WEB_ROOT / name).read_bytes(), content_type)
                 elif url.path == "/api/replay":
-                    self.reply(200, app.replay(selection(values)))
+                    self.reply(200, app.replay(selection(values), self.visitor()))
                 elif url.path == "/api/budget":
-                    self.reply(200, app.budget())
+                    self.reply(200, app.budget(self.visitor()))
+                elif url.path == "/api/key-session" and not values:
+                    self.reply(200, self.visitor_status())
                 elif url.path == "/api/job" and set(values) == {"id"}:
                     self.reply(200, app.job(values["id"]))
                 elif url.path == "/api/recovery-download" and set(values) == {"id"}:
@@ -364,11 +401,25 @@ def make_server(port: int = 8765, app: Dashboard | None = None, *,
                     or self.headers.get("Content-Type", "").split(";")[0] != "application/json"):
                 self.reply(403, {"error": "Start investigations from this application's own interface."})
                 return
-            if self.path not in ("/api/investigate", "/api/guidance", "/api/recovery-demo"):
+            if self.path not in ("/api/investigate", "/api/guidance", "/api/recovery-demo", "/api/key-session", "/api/key-disconnect"):
                 self.reply(404, {"error": "Page not found."})
                 return
             try:
                 values = json.loads(body)
+                if self.path in ("/api/key-session", "/api/key-disconnect"):
+                    if not app.allow_visitor_keys or self.expected_origin() != public_origin:
+                        raise ValueError("Temporary keys are available only on the configured HTTPS public site. Use .env in the local build.")
+                    token, age = "", 0
+                    if self.path == "/api/key-session":
+                        token = app.visitors.connect(values, self.visitor_token())
+                        age = SESSION_SECONDS
+                    else:
+                        if values != {}:
+                            raise ValueError("Disconnect does not need key data.")
+                        app.visitors.disconnect(self.visitor_token())
+                    self.reply(200, {"connected": bool(token), "expires_in_seconds": age},
+                        cookie=f"{COOKIE_NAME}={token}; Path=/; Max-Age={age}; HttpOnly; Secure; SameSite=Strict")
+                    return
                 if self.path == "/api/recovery-demo":
                     self.reply(200, app.recovery_demo(values))
                     return
@@ -379,20 +430,28 @@ def make_server(port: int = 8765, app: Dashboard | None = None, *,
                     app.replay(choice)  # Reject invalid clocks before any search credit is reserved.
                     self.reply(200, app.guidance.lookup(guidance_topic(choice)))
                 else:
-                    self.reply(202, {"id": app.start(choice)})
+                    self.reply(202, {"id": app.start(choice, self.visitor())})
             except (ValueError, DatasetError, GuidanceError) as error:
                 self.reply(400, {"error": str(error)})
             except OSError:
                 self.reply(503, {"error": "The local report could not be saved. Check the project's reports folder before trying again."})
 
-    return ThreadingHTTPServer((bind_address, port), Handler)
+    class DemoServer(ThreadingHTTPServer):
+        def service_actions(self):
+            app.visitors.expire()  # Also remove expired keys while the site is idle.
+
+        def server_close(self):
+            app.visitors.clear()
+            super().server_close()
+
+    return DemoServer((bind_address, port), Handler)
 
 
 def serve(port: int = 8765, *, bind_address: str = "127.0.0.1", public_demo: bool = False,
           public_origin: str | None = None) -> None:
     with make_server(port, Dashboard(public_demo=public_demo), bind_address=bind_address, public_origin=public_origin) as server:
         print(f"Water Diagnostics is ready: {public_origin or f'http://127.0.0.1:{server.server_port}'}", flush=True)
-        print("Public demonstration: paid APIs disabled; generated reports last for this server session."
+        print("Public demonstration: owner-funded APIs disabled; optional visitor keys expire after 30 minutes. Reports last for this server session."
               if public_demo else "Preview and local checks are free. Nemotron and requested Tavily guidance use their separate credit guards.", flush=True)
         print("Press Ctrl+C to stop the interface.", flush=True)
         try:

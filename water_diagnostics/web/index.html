@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#173b33"><title>Water Diagnostics · Investigation workbench</title>
-<link rel="stylesheet" href="/style.css?v=console-9"><script src="/app.js?v=console-9" defer></script>
+<link rel="stylesheet" href="/style.css?v=console-10"><script src="/app.js?v=console-10" defer></script>
 </head>
 <body>
 <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
@@ -32,7 +32,20 @@
       <div id="simulation-controls" class="replay-controls" hidden><label class="clock-label" for="scenario">Simulated scenario<select id="scenario"><option value="frozen">Held sensor reading</option><option value="normal">Brief excursion</option><option value="communication_loss">Missing telemetry</option><option value="maintenance">Maintenance disturbance</option><option value="process_change">Corroborating process change</option><option value="insufficient">Ambiguous evidence</option></select></label><a class="recovery-link" href="#recovery-demo">Try recovery simulation <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
     </section>
     <div id="message" class="message" role="status" aria-live="polite" hidden></div>
-    <p id="deployment-note" class="deployment-note" hidden><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>Public demo · Saved Nemotron reports, free local checks and recovery simulations. <a href="https://github.com/Sanidhya77/water-diagnostics">Get the local build for fresh inference <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></span></p>
+    <p id="deployment-note" class="deployment-note" hidden><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>Public demo · Saved reports, local checks and recovery simulations are free. Fresh Nemotron inference uses your own key. <a href="https://github.com/Sanidhya77/water-diagnostics">Setup and tests <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></span></p>
+    <details id="visitor-connection" class="visitor-connection" hidden>
+      <summary>Use your own Nebius key <span id="key-summary">Not connected</span></summary>
+      <div class="key-connection-body">
+        <p>Your key is sent over HTTPS to this demo server and then to Nebius. It stays in server memory for a 30-minute connection; it is not saved to files, logs or browser storage. Use a dedicated demo key. For a key that stays on your own computer, <a href="https://github.com/Sanidhya77/water-diagnostics#run-locally">run locally</a>.</p>
+        <form id="key-form" autocomplete="off">
+          <label for="visitor-key">Nebius API key<input id="visitor-key" type="password" minlength="20" maxlength="512" required autocomplete="off" spellcheck="false" autocapitalize="none" aria-describedby="key-terms"></label>
+          <button id="connect-key" class="button secondary" type="submit">Connect key</button>
+        </form>
+        <p id="key-terms" class="key-terms">You pay Nebius for fresh calls. Conservative guards: $0.02 per investigation and $0.25 per connection. The connection allowance resets on reconnect or restart; it is not an account spending cap. Connecting alone makes no provider call.</p>
+        <div class="key-session-controls"><p id="key-status" role="status" aria-live="polite">No key connected. Saved reports and local checks work without one.</p><button id="disconnect-key" class="button secondary" type="button" hidden>Disconnect and remove key</button></div>
+        <p class="key-terms">Disconnect removes the stored key; a request already sent may finish and be billed. Tavily lookup remains available in the local build with your own optional Tavily key.</p>
+      </div>
+    </details>
     <a class="console-jump" href="#investigation-decision">Investigation &amp; run controls <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     <div class="console-layout">
     <section class="chart-panel" id="signal" aria-label="Recorded signal">

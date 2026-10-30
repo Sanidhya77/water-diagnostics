@@ -28,8 +28,10 @@ no physical hardware deployment is claimed.
 - Public YouTube video: PENDING — record and upload the actual application.
 
 The public demo offers saved Nemotron results, free local checks and recovery
-simulations without login. Paid provider calls are blocked there. The source
-test build runs locally and supports optional fresh inference with a local key.
+simulations without login. Owner-funded provider calls are blocked there.
+Visitors can optionally connect their own Nebius key for 30 minutes of temporary,
+visitor-funded inference; Disconnect removes the stored key. The source test
+build also supports optional fresh inference with a local key.
 Dependency installation needs internet access. The bundled saved/local walkthrough
 requires no API key or paid service. The build was checked from extracted source
 with credentials and original research ZIPs absent, reusing installed dependencies.

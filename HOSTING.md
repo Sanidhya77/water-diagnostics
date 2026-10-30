@@ -24,8 +24,9 @@ also describe how to reproduce the deployment in another Render account.
    `status: ready` and `public_demo: true`.
 6. Confirm the Public demo note, two recorded weeks, saved Nemotron report,
    free local checks, Markdown download and both recovery simulations. The fresh
-   inference and reference-lookup controls must be disabled. A direct request to
-   either paid backend route is also rejected.
+   inference control is disabled until that visitor connects their own Nebius
+   key. A direct model request without a valid visitor connection is rejected.
+   Public Tavily lookup remains disabled.
 
 If creating a Web Service manually, use Python runtime and Free instance:
 
@@ -41,11 +42,34 @@ origin configuration and testing.
 
 ## Cost and session behavior
 
-Public mode blocks Nebius and Tavily calls on the server, even if a visitor
-bypasses the disabled buttons. It does not load provider credentials or use a
-resettable spending ledger. Saved results are identified as prior inference.
-For a fresh Nebius call, use the local build with your own key and its original
-$0.02/run and $5 project guards.
+Public mode never loads the owner's Nebius or Tavily credentials. Saved results
+are identified as prior inference. Visitors can optionally connect **their own
+Nebius key** through the HTTPS site and explicitly start fresh inference. The
+base URL and Nano model are fixed; a visitor cannot supply an arbitrary provider
+endpoint. Connecting alone does not make a provider call. Tavily remains local.
+
+Keys stay in server memory for a 30-minute connection, in a bounded store of at
+most 64 connections. An opaque, Secure, HttpOnly, SameSite=Strict cookie identifies
+the connection; the key is never returned, logged, written to disk or saved in
+browser storage. Disconnect, expiry or a server restart removes the stored key.
+A request already sent may finish and be billed. The server periodically removes
+expired connections even when no visitor request arrives. There is no login or
+database. Users who prefer not to entrust this server with a key can run locally.
+
+Each connection has a conservative **$0.25 temporary guard** and **$0.02 per
+investigation**, with atomic in-memory reservations before every provider call.
+Unknown usage retains the full reservation, and there are no automatic retries.
+Visitors pay through their own Nebius accounts. Reconnecting or restarting resets
+this temporary allowance: **it is not a durable account or invoice spending cap**.
+No shared $10 owner-funded allowance is enabled. A reliable owner-funded public
+allowance would need a persistent shared counter or a verified provider-side cap;
+Render's temporary filesystem cannot provide that guarantee. The local build
+retains its separate $0.02/run and $5 project ledger.
+
+Render hosting/build/bandwidth charges are separate from Nebius model usage.
+Render's build-pipeline spending limit does not cap third-party inference bills.
+See [Render build billing](https://render.com/docs/build-pipeline) and
+[Nebius billing](https://docs.tokenfactory.nebius.com/other-capabilities/billing-new).
 
 Generated local reports and simulated recovery results are held in bounded
 server memory. Download them before the server restarts. No operator data upload,

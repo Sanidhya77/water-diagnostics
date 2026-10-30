@@ -78,9 +78,13 @@ recovery simulations make no paid API calls.
 
 [The public demo](https://water-diagnostics-demo.onrender.com) runs on Render
 without login. It offers recorded replays, saved Nemotron reports, free local
-checks and recovery simulations. It blocks paid providers on the server and
-keeps generated reports in bounded memory. The local build retains optional fresh
-inference. See [hosting details](HOSTING.md), including free-service sleep limits.
+checks and recovery simulations. **Use your own Nebius key** optionally enables
+fresh inference through a temporary HTTPS connection. The key stays in server
+memory for a 30-minute connection, with a Disconnect control; no key is saved
+to files, logs or browser storage. The public server never loads the owner's
+provider keys. Visitors pay for their own calls. Prefer the local build if you
+want the key to stay on your own computer. See [hosting details](HOSTING.md),
+including connection guards and free-service sleep limits.
 See [usefulness and operator review](USEFULNESS_AND_PILOT.md) for the documented
 operator need, implemented backend behavior and a short review protocol.
 
@@ -114,6 +118,19 @@ Nebius billing is authoritative. Inspect development accounting with:
 .\.venv\Scripts\python.exe -m water_diagnostics budget-status
 ```
 
+For clarity, personal local setup is:
+
+```powershell
+if (!(Test-Path .env)) { Copy-Item .env.example .env }
+notepad .env
+```
+
+Enter the key after `NEBIUS_API_KEY=` (and optionally `TAVILY_API_KEY=`), save,
+then restart the local server. Do not overwrite an existing `.env` containing
+your keys; edit that file instead. Never paste a key in an issue, screenshot or
+video. The public website's connection form accepts Nebius keys only; Tavily
+remains local. There is no shared $10 owner-funded public allowance.
+
 Tavily uses a separate optional `TAVILY_API_KEY`, a fixed public query, a
 24-hour cache and a three-credit local development limit. No incident readings
 or notes enter that query. The supplied build contains no guidance cache or keys.
@@ -138,6 +155,12 @@ These checks describe the guarded model-plus-Python workflow, not field accuracy
 or an independent benchmark. They are not a latency guarantee. Curated current
 reports are in `demo_reports/` and load as saved results without new inference;
 the earlier protocol attempts and a failed river run are preserved separately.
+
+The October 30 visitor-key update passed **178 local tests**. These include
+cross-visitor isolation, HTTPS-origin checks, cookie protections, expiry,
+disconnect, unknown-usage reservations and concurrent connection-budget limits.
+Provider responses in these new tests are mocked; the update's automated tests
+make no paid calls. Existing fresh-inference qualification is described above.
 
 The qualification found and fixed a river output-limit failure by using the
 Nano model's direct tool-calling mode (`enable_thinking=false`). See
